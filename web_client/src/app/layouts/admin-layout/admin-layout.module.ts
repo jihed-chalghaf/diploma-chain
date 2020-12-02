@@ -16,6 +16,10 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
+import { DiplomaIssueComponent } from './pages/diploma-issue/diploma-issue.component';
+import { DiplomaListComponent } from './pages/diploma-list/diploma-list.component';
+import { StudentListComponent } from './pages/student-list/student-list.component';
+import { DiplomaBlueprintCreateComponent } from './pages/diploma-blueprint-create/diploma-blueprint-create.component';
 
 @NgModule({
   imports: [
@@ -38,6 +42,10 @@ import {MatSelectModule} from '@angular/material/select';
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
+    DiplomaIssueComponent,
+    DiplomaListComponent,
+    StudentListComponent,
+    DiplomaBlueprintCreateComponent,
   ]
 })
 

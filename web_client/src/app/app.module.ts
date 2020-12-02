@@ -22,6 +22,8 @@ import {
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { Web3Service } from './services/web3.service';
+import { StudentLayoutComponent } from './layouts/student-layout/student-layout.component';
+import { VerifierLayoutComponent } from './layouts/verifier-layout/verifier-layout.component';
 
 @NgModule({
   imports: [
@@ -39,7 +41,8 @@ import { Web3Service } from './services/web3.service';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-
+    StudentLayoutComponent,
+    VerifierLayoutComponent
   ],
   providers: [
     Web3Service
