@@ -10,13 +10,14 @@ import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
+/*import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { TableListComponent } from './table-list/table-list.component';
 import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
 import { MapsComponent } from './maps/maps.component';
-import { NotificationsComponent } from './notifications/notifications.component';
+import { NotificationsComponent } from './notifications/notifications.component';*/
+
 import {
   AgmCoreModule
 } from '@agm/core';
@@ -24,6 +25,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { Web3Service } from './services/web3.service';
 import { StudentLayoutComponent } from './layouts/student-layout/student-layout.component';
 import { VerifierLayoutComponent } from './layouts/verifier-layout/verifier-layout.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 @NgModule({
   imports: [
@@ -42,7 +44,8 @@ import { VerifierLayoutComponent } from './layouts/verifier-layout/verifier-layo
     AppComponent,
     AdminLayoutComponent,
     StudentLayoutComponent,
-    VerifierLayoutComponent
+    VerifierLayoutComponent,
+    LandingComponent
   ],
   providers: [
     Web3Service

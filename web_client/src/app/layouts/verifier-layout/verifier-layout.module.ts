@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VerifierLayoutComponent } from './verifier-layout.component';
 import { DiplomaVerifComponent } from './pages/diploma-verif/diploma-verif.component';
+import { RouterModule } from '@angular/router';
+import { VerifierLayoutRoutes } from './verifier-layout.routing';
 
 
 
 @NgModule({
   declarations: [
-    VerifierLayoutComponent, 
     DiplomaVerifComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forChild(VerifierLayoutRoutes)
   ]
 })
 export class VerifierLayoutModule { }

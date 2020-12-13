@@ -4,19 +4,43 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { StudentLayoutComponent } from './layouts/student-layout/student-layout.component';
+import { VerifierLayoutComponent } from './layouts/verifier-layout/verifier-layout.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 const routes: Routes =[
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  }, {
-    path: '',
+    path: 'admin',
     component: AdminLayoutComponent,
     children: [{
       path: '',
       loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
     }]
+  },
+  {
+    path: 'student',
+    component: StudentLayoutComponent,
+    children: [{
+      path: '',
+      loadChildren: './layouts/student-layout/student-layout.module#StudentLayoutModule'
+    }]
+  },
+  {
+    path: 'verifier',
+    component: VerifierLayoutComponent,
+    children: [{
+      path: '',
+      loadChildren: './layouts/verifier-layout/verifier-layout.module#VerifierLayoutModule'
+    }]
+  },
+  {
+    path: '',
+    pathMatch: "full",
+    component: LandingComponent
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
 
