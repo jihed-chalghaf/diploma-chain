@@ -20,7 +20,7 @@ contract Diplomachain {
         string nationality;
         string phoneNumber;
         string gender;
-        Diploma[] diplomas;
+        bytes32[] diplomas;
     }
 
     mapping(address => uint256) private studentsIndexes;
@@ -35,7 +35,7 @@ contract Diplomachain {
     Diploma[] public pendingDiplomas;
     uint256 public pendingDiplomasCount;
 
-    // Let's say we have multiple universities, so it's a good practice to define admins addresses for nwo
+    // Let's say we have multiple universities, so it's a good practice to define admins addresses for now
     mapping(address => uint256) public adminsIndexes;
 
     constructor() {
@@ -74,7 +74,7 @@ contract Diplomachain {
         string memory _nationality,
         string memory _phoneNumber,
         string memory _gender,
-        Diploma[] memory _diplomas
+        bytes32[] memory _diplomas
     ) public onlyAdmin {
         require(studentsIndexes[_id] == 0, "Student already exists");
         studentsCount++;
@@ -82,6 +82,14 @@ contract Diplomachain {
         students.push(
             Student(_id, _firstName, _lastName, _email, _nationality, _phoneNumber, _gender, _diplomas)
         );
+    }
+    // remove an element from an array and shift to avoid leaving gaps
+    function removeItem(Diploma[] storage array, uint256 index) private {
+        for (uint i = index; i < array.length - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        delete array[array.length - 1];
+        array.pop();
     }
     // addDiploma()
     function addDiploma(bytes32 _id) public onlyAdmin {
@@ -92,6 +100,16 @@ contract Diplomachain {
         diplomas.push(
             pendingDiplomas[pendingDiplomasIndexes[_id] - 1]
         );
+        // get the student (owner) address
+        address student_adr = pendingDiplomas[pendingDiplomasIndexes[_id] - 1].owner;
+        // add the new diploma id to the student's diplomas ids array
+        students[studentsIndexes[student_adr] - 1].diplomas.push(
+            _id
+        );
+        // remove the diploma from the pending diplomas array
+        removeItem(pendingDiplomas, pendingDiplomasIndexes[_id] - 1);
+        delete pendingDiplomasIndexes[_id];
+        pendingDiplomasCount--;
         emit LogAddDiploma(_id);
     }
     // isStudent()
@@ -120,11 +138,22 @@ contract Diplomachain {
     function getDiplomas() public onlyAdmin view returns (Diploma[] memory) {
         return diplomas;
     }
+    // getStudentDiplomasIds()
+    function getStudentDiplomasIds(address studentId) public view returns (bytes32[] memory) {
+        require(studentsIndexes[studentId] != 0, "Student does not exist");
+        require(msg.sender == studentId || adminsIndexes[msg.sender] != 0, "Only owner or admin are allowed");
+        return students[studentsIndexes[studentId] - 1].diplomas;
+    }
     // getStudentDiplomas()
     function getStudentDiplomas(address studentId) public view returns (Diploma[] memory) {
         require(studentsIndexes[studentId] != 0, "Student does not exist");
         require(msg.sender == studentId || adminsIndexes[msg.sender] != 0, "Only owner or admin are allowed");
-        return students[studentsIndexes[studentId] - 1].diplomas;
+        bytes32[] memory diplomas_ids = students[studentsIndexes[studentId] - 1].diplomas;
+        Diploma[] memory full_diplomas = new Diploma[](diplomas_ids.length);
+        for (uint256 i = 0; i < diplomas_ids.length; i++) {
+            full_diplomas[i] = diplomas[diplomasIndexes[diplomas_ids[i]] - 1];
+        }
+        return full_diplomas;
     }
     // requestDiploma()
     function requestDiploma(
