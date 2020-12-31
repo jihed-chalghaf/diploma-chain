@@ -1,37 +1,33 @@
+<div class="row">
+</div>
+<div class="row">
+  <div class="col-md-10 mx-auto">
+    <div class="card">
+      <div class="card-header card-header-success">
+        <h3 class="card-title pull-left">Your Issued Diploma Collections</h3>
+        <button class="btn btn-primary btn-fab btn-round pull-right" (click)="openDialog()">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+      <div id="diploma-list" class="card-body d-flex flex-row flex-wrap">
 
-
-    <div class="row">
-
-    </div>
-    <div class="row">
-
-        <div class="col-md-10 mx-auto">
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h3 class="card-title pull-left">Your Issued Diploma Collections</h3>
-                <button class="btn btn-primary btn-fab btn-round pull-right" (click)="openDialog()"><i class="material-icons"  >add</i></button>
-              </div>
-              <div id="diploma-list" class="card-body d-flex flex-row flex-wrap">
-    
-                <!-- to be changed to receive real stuff-->
-                <div class="card col-md-4 mx-4" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,20]">
-                    <div class="card-header">
-                        <h4 class="card-title">Diploma {{i}} Collection</h4>
-                        <p class="card-category">Collection  description</p>
-                    </div>
-                    <div class="card-body">
-                        A
-                    </div>
-                </div>
-              </div>
-             <!--  <div class="card-footer clearfix">
+        <!-- to be changed to receive real stuff-->
+        <div class="card col-md-4 mx-4" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,20]">
+          <div class="card-header">
+            <h4 class="card-title">Diploma {{i}} Collection</h4>
+            <p class="card-category">Collection description</p>
+          </div>
+          <div class="card-body">
+            A
+          </div>
+        </div>
+      </div>
+      <!--  <div class="card-footer clearfix">
         
                 <button mat-raised-button class="btn btn-primary pull-left">Issue</button>
                 <button mat-raised-button class="btn btn-fab btn-round pull-right">+</button>
         
               </div> -->
-            </div>
-          </div>
     </div>
-
-
+  </div>
+</div>

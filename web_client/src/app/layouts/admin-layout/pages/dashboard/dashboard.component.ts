@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {DiplomaBlueprintCreateComponent  } from "../diploma-blueprint-create/diploma-blueprint-create.component";
+import {DiplomaBlueprintCreateComponent} from '../diploma-blueprint-create/diploma-blueprint-create.component';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

@@ -6,6 +6,7 @@ contract Diplomachain {
     struct Diploma {
         bytes32 id;
         address owner;
+        address issuer;
         string speciality;
         string honors;
         string title;
@@ -38,6 +39,9 @@ contract Diplomachain {
     // Let's say we have multiple universities, so it's a good practice to define admins addresses for now
     mapping(address => uint256) public adminsIndexes;
 
+    // Since every diploma will be issued by a university club, we need to have issuersIndexes
+    mapping(address => uint256) public issuersIndexes;
+
     constructor() {
         studentsCount = 0;
         diplomasCount = 0;
@@ -51,6 +55,10 @@ contract Diplomachain {
     }
     modifier onlyStudent() {
         require(studentsIndexes[msg.sender] != 0, "Student not found");
+        _;
+    }
+    modifier onlyIssuer() {
+        require(issuersIndexes[msg.sender] != 0, "Issuer not found");
         _;
     }
 
@@ -91,7 +99,7 @@ contract Diplomachain {
         delete array[array.length - 1];
         array.pop();
     }
-    // addDiploma()
+    // addDiploma() => when a student requests a diploma, the admin will call this fct to issue it
     function addDiploma(bytes32 _id) public onlyAdmin {
         require(diplomasIndexes[_id] == 0, "Diploma already exists");
         require(pendingDiplomasIndexes[_id] != 0, "Diploma request is not registered or has been removed");
@@ -112,6 +120,29 @@ contract Diplomachain {
         pendingDiplomasCount--;
         emit LogAddDiploma(_id);
     }
+    // issueDiploma() => when the issuer himself wants to issue a diploma, he'll be able to do that directly
+    function issueDiploma(
+        address owner,
+        address issuer,
+        string memory _speciality,
+        string memory _honors,
+        string memory _title,
+        uint256 _dateObtained
+    ) public onlyIssuer {
+        require(msg.sender == issuer, "You cannot add a diploma issued by someone else..");
+        // generate a unique hash identifier for each diploma
+        bytes32 id = keccak256(abi.encodePacked(owner, issuer, _speciality, _honors, _title, _dateObtained));
+        diplomasCount++;
+        diplomasIndexes[id] = diplomas.length + 1;
+        diplomas.push(
+            Diploma(id, owner, issuer, _speciality, _honors, _title, _dateObtained)
+        );
+        // add the new diploma id to the student's diplomas ids array
+        students[studentsIndexes[owner] - 1].diplomas.push(
+            id
+        );
+        emit LogAddDiploma(id);
+    }
     // isStudent()
     function isStudent() public view returns (bool) {
         return studentsIndexes[msg.sender] != 0;
@@ -119,6 +150,10 @@ contract Diplomachain {
     // isAdmin()
     function isAdmin() public view returns (bool) {
         return adminsIndexes[msg.sender] != 0;
+    }
+    // isIssuer()
+    function isIssuer() public view returns (bool) {
+        return issuersIndexes[msg.sender] != 0;
     }
     // getStudentIndex()
     function getStudentIndex(address studentId) public view returns (uint256) {
@@ -157,18 +192,20 @@ contract Diplomachain {
     }
     // requestDiploma()
     function requestDiploma(
+        address issuer,
         string memory _speciality,
         string memory _honors,
         string memory _title,
         uint256 _dateObtained
     ) public onlyStudent {
         require(studentsIndexes[msg.sender] != 0, "Student does not exist");
+        require(issuersIndexes[issuer] != 0, "Issuer does not exist");
         // generate a unique hash identifier for each diploma
-        bytes32 id = keccak256(abi.encodePacked(msg.sender, _speciality, _honors, _title, _dateObtained));
+        bytes32 id = keccak256(abi.encodePacked(msg.sender, issuer, _speciality, _honors, _title, _dateObtained));
         pendingDiplomasCount++;
         pendingDiplomasIndexes[id] = pendingDiplomas.length + 1;
         pendingDiplomas.push(
-            Diploma(id, msg.sender, _speciality, _honors, _title, _dateObtained)
+            Diploma(id, msg.sender, issuer, _speciality, _honors, _title, _dateObtained)
         );
         emit LogRequestDiploma(msg.sender);
     }
