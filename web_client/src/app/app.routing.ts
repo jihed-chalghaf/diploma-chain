@@ -13,7 +13,7 @@ const routes: Routes =[
   {
     path: 'admin',
     component: AdminLayoutComponent,
-    canActivate: [AuthGuard],
+//    canActivate: [AuthGuard],
     children: [{
       path: '',
       loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
@@ -22,7 +22,7 @@ const routes: Routes =[
   {
     path: 'student',
     component: StudentLayoutComponent,
-    canActivate: [AuthGuard],
+//    canActivate: [AuthGuard],
     children: [{
       path: '',
       loadChildren: './layouts/student-layout/student-layout.module#StudentLayoutModule'

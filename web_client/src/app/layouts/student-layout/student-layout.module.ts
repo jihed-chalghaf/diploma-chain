@@ -6,8 +6,9 @@ import { DiplomaListComponent } from './pages/diploma-list/diploma-list.componen
 import { DiplomaRequestComponent } from './pages/diploma-request/diploma-request.component';
 import { RouterModule } from '@angular/router';
 import { StudentLayoutRoutes } from './student-layout.routing';
-
-
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -16,8 +17,15 @@ import { StudentLayoutRoutes } from './student-layout.routing';
     DiplomaListComponent, 
     DiplomaRequestComponent
   ],
+  entryComponents: [
+    DiplomaRequestComponent
+  ],
+
   imports: [
     CommonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatSelectModule,
     RouterModule.forChild(StudentLayoutRoutes)
   ]
 })

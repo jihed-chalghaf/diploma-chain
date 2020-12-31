@@ -1,1 +1,17 @@
-<p>diploma-blueprint-create works!</p>
+<h4 mat-dialog-title>Create a new diploma blueprint</h4>
+<mat-dialog-content class="mat-typography">
+  <form>
+    <mat-form-field >
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Ex. Eng diploma" >
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>Details</mat-label>
+        <textarea matInput placeholder="Ex. this diploma..."></textarea>
+      </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button class="btn btn-secondary" mat-dialog-close>Cancel</button>
+  <button mat-button class="btn btn-primary" [mat-dialog-close]="true" cdkFocusInitial>Create</button>
+</mat-dialog-actions>

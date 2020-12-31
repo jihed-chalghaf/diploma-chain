@@ -1,0 +1,30 @@
+<h4 mat-dialog-title>Append new diploma holder</h4>
+<mat-dialog-content class="mat-typography">
+  <form>
+    <mat-form-field>
+      <mat-label>Holder Address</mat-label>
+      <input matInput placeholder="0xFF........AA" />
+    </mat-form-field>
+
+      <mat-select matInput placeholder="Choose the diploma">
+        <mat-option>1</mat-option>
+        <mat-option>2</mat-option>
+        <mat-option>3</mat-option>
+        <mat-option>4</mat-option>
+        <mat-option>5</mat-option>
+        <mat-option>6</mat-option>
+      </mat-select>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button class="btn btn-secondary" mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    class="btn btn-primary"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+  >
+    Add
+  </button>
+</mat-dialog-actions>

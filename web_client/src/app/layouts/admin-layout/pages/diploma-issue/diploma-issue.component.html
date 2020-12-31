@@ -1,1 +1,46 @@
-<p>diploma-issue works!</p>
+
+
+<section class="row">
+    <div class="col-md-9 p-4">
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h4 class="card-title pull-left">Issuing multiple or single digital diploma</h4>
+          <button class="btn btn-secondary btn-fab btn-round pull-right" (click)="openDialog()"><i class="material-icons"  >add</i></button>
+        </div>
+        <div class="card-body">
+          <div class="card-content table-responsive table-full-width">
+            <table class="table">
+              <thead class="text-primary">
+                <th>Name</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Salary</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Dakota Rice</td>
+                  <td>Niger</td>
+                  <td>Oud-Turnhout</td>
+                  <td class="text-danger">$36,738</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer align-end">
+  
+          <button mat-raised-button class="btn btn-primary pull-left">Issue</button>
+          
+  
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+
+
+      <h2>here come the checlist animation component (hopefully)</h2>
+      <app-checklist></app-checklist>
+  
+    </div>
+  </section>
+  

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-diploma-request',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DiplomaRequestComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<DiplomaRequestComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit(): void {
   }
-
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+// this interface doesn't affect anything aside from the data type above
+export interface DialogData {
+  issuer: string;
+  diploma: string;
 }

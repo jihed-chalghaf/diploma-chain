@@ -1,0 +1,9 @@
+.navbar,.navbar-nav,.navbar-expand-lg{
+    background-color: rgb(196, 20, 20)!important;
+    color: rgba(255, 255, 255, 0.933);
+
+}
+.navbar-img{
+    height: 5rem;
+    width: 5rem;
+}

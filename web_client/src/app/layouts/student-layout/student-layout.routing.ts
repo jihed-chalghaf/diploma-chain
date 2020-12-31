@@ -24,6 +24,7 @@ export const StudentLayoutRoutes: Routes = [
     },
     {
         path: '',
+        pathMatch: "full",
         redirectTo: 'dashboard'
     }
 ];
