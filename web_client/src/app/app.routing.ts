@@ -8,12 +8,14 @@ import { StudentLayoutComponent } from './layouts/student-layout/student-layout.
 import { VerifierLayoutComponent } from './layouts/verifier-layout/verifier-layout.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { StudentGuard } from './guards/student.guard';
 
 const routes: Routes =[
   {
     path: 'admin',
     component: AdminLayoutComponent,
-//    canActivate: [AuthGuard],
+//    canActivate: [AuthGuard, AdminGuard],
     children: [{
       path: '',
       loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
@@ -22,7 +24,7 @@ const routes: Routes =[
   {
     path: 'student',
     component: StudentLayoutComponent,
-//    canActivate: [AuthGuard],
+//    canActivate: [AuthGuard, StudentGuard],
     children: [{
       path: '',
       loadChildren: './layouts/student-layout/student-layout.module#StudentLayoutModule'
