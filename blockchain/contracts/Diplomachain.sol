@@ -72,7 +72,11 @@ contract Diplomachain {
         require (diplomasIndexes[diplomaId] != 0, "You provided an invalid diploma identifier");
         return diplomas[diplomasIndexes[diplomaId] - 1];
     }
-
+    // getDiploma() : for now, verifyDiploma() has the same code as getDiploma(), probably we'll remove the other fct
+    function getDiploma(bytes32 diplomaId) public view returns (Diploma memory){
+        require (diplomasIndexes[diplomaId] != 0, "You provided an invalid diploma identifier");
+        return diplomas[diplomasIndexes[diplomaId] - 1];
+    }
     // addStudent()
     function addStudent(
         address _id,
@@ -85,11 +89,18 @@ contract Diplomachain {
         bytes32[] memory _diplomas
     ) public onlyAdmin {
         require(studentsIndexes[_id] == 0, "Student already exists");
+        require(adminsIndexes[_id] == 0, "An admin cannot enroll as a student");
+        require(issuersIndexes[_id] == 0, "An issuer cannot enroll as a student");
         studentsCount++;
         studentsIndexes[_id] = students.length + 1;
         students.push(
             Student(_id, _firstName, _lastName, _email, _nationality, _phoneNumber, _gender, _diplomas)
         );
+    }
+    // getStudent()
+    function getStudent(address student_addr) public view returns (Student memory){
+        require (studentsIndexes[student_addr] != 0, "You provided an invalid student address");
+        return students[studentsIndexes[student_addr] - 1];
     }
     // remove an element from an array and shift to avoid leaving gaps
     function removeItem(Diploma[] storage array, uint256 index) private {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { RoleService } from './role.service';
+import { LocalService } from './local.service';
 declare let require: any;
 const Web3 = require('web3');
 const contract = require('@truffle/contract');
@@ -13,18 +15,22 @@ declare let window: any;
 export class Web3Service {
   private web3: any;
   private accounts: string[];
-  private islogged: boolean = false;
+  private logged: boolean = false;
   public mainAccount: string;
   public ready = false;
 
   public accountsObservable = new Subject<string[]>();
 
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private roleService: RoleService,
+    private localService: LocalService
+  ) {
     console.log("inside web3 service constructor");
   }
   public isLogged(): boolean {
-    return this.islogged;
+    return this.logged;
   }
   public login() {
     console.log('logging in');
@@ -32,10 +38,11 @@ export class Web3Service {
   }
   public logout() {
     console.log('log out');
-    this.islogged = false;
+    this.logged = false;
     this.web3 = null;
     this.accounts = null;
     this.mainAccount = null;
+    this.localService.clearStorage();
     this.router.navigate(["/"]);
   }
   public bootstrapWeb3() {
@@ -48,12 +55,13 @@ export class Web3Service {
         .then(accounts => {
 
           this.web3 = new Web3(window.ethereum);
-          this.islogged = true;
+          this.logged = true;
           console.log('Using metmask as web3 provider');
           console.log("provided accounts, ", accounts)
           this.mainAccount = window.ethereum.selectedAddress;
           console.log("is main account true ? ", this.mainAccount == accounts[0]);
           this.initChangingListener();
+          this.roleService.setRole();
           this.router.navigate(['/']);
         });
     } else {

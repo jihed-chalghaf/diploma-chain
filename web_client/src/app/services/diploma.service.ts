@@ -11,6 +11,9 @@ import { Diploma } from 'app/models/diploma.model';
 export class DiplomaService implements OnInit {
 
   Diplomachain: any;
+  diploma: Diploma;
+  diplomas: Diploma[];
+  index: number;
 
   constructor(private web3Service: Web3Service) { }
 
@@ -22,15 +25,16 @@ export class DiplomaService implements OnInit {
       });
   }
 
-  getDiplomas() {
+  getDiplomas(): Diploma[] {
     this.Diplomachain.deployed().then((deployed) => {
       deployed.getDiplomas
         .call({ from: this.web3Service.mainAccount })
         .then((result) => {
-          return result;
+          this.diplomas = result;
         })
         .catch((err) => console.log(err));
     });
+    return this.diplomas;
   }
 
   requestDiploma(diploma: Diploma) {
@@ -51,15 +55,16 @@ export class DiplomaService implements OnInit {
     });
   }
 
-  getDiplomaIndex(diploma_id: Bytes32) {
+  getDiplomaIndex(diploma_id: Bytes32): number {
     this.Diplomachain.deployed().then((deployed) => {
       deployed.getDiplomaIndex
         .call(diploma_id, { from: this.web3Service.mainAccount })
         .then((result) => {
-          return result;
+          this.index = result;
         })
         .catch((err) => console.log(err));
     });
+    return this.index;
   }
 
   issueDiploma(diploma: Diploma) {
@@ -92,15 +97,28 @@ export class DiplomaService implements OnInit {
     });
   }
   
-  verifyDiploma(diploma_id: Bytes32) {
+  verifyDiploma(diploma_id: Bytes32): Diploma {
     this.Diplomachain.deployed().then((deployed) => {
       deployed.verifyDiploma
         .call(diploma_id)
         .then((result) => {
-          return result;
+          this.diploma = result;
         })
         .catch((err) => console.log(err));
     });
+    return this.diploma;
+  }
+
+  getDiploma(diploma_id: Bytes32): Diploma {
+    this.Diplomachain.deployed().then((deployed) => {
+      deployed.getDiploma
+        .call(diploma_id)
+        .then((result) => {
+          this.diploma = result;
+        })
+        .catch((err) => console.log(err));
+    });
+    return this.diploma;
   }
 }
  
