@@ -1,17 +1,64 @@
-<h4 mat-dialog-title>Create a new diploma blueprint</h4>
-<mat-dialog-content class="mat-typography">
-  <form>
-    <mat-form-field >
-        <mat-label>Title</mat-label>
-        <input matInput placeholder="Ex. Eng diploma" >
-      </mat-form-field>
-      <mat-form-field >
-        <mat-label>Details</mat-label>
-        <textarea matInput placeholder="Ex. this diploma..."></textarea>
-      </mat-form-field>
-  </form>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button class="btn btn-secondary" mat-dialog-close>Cancel</button>
-  <button mat-button class="btn btn-primary" [mat-dialog-close]="true" cdkFocusInitial>Create</button>
-</mat-dialog-actions>
+<div class="fluid-container blueprint">
+
+  <div class="row">
+    
+    <div class="col-md-4">
+      <h4 mat-dialog-title>Create a new diploma blueprint</h4>
+      
+      <mat-dialog-content class="mat-typography">
+        <form [formGroup]="diplomaBlueprintForm">
+          <mat-form-field >
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" placeholder="Ex. Eng diploma" >
+          </mat-form-field>
+          <mat-form-field >
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Ex. this diploma..."></textarea>
+          </mat-form-field>
+          <mat-form-field >
+            <mat-label>University Name</mat-label>
+            <input matInput formControlName="university" placeholder="Ex. INSAT"/>
+          </mat-form-field>
+          <mat-form-field >
+            <mat-label>Signature</mat-label>
+            <input matInput formControlName="signature" placeholder="Ex. Mr. Foulen ben falten"/>
+          </mat-form-field>
+          <mat-form-field >
+            <mat-label>Logo url</mat-label>
+            <input matInput formControlName="logo" placeholder="Ex. *"/>
+          </mat-form-field>
+        </form>
+      </mat-dialog-content>
+      <mat-dialog-actions align="end">
+        <button mat-button class="btn btn-secondary" (click)="close()">Cancel</button>
+        <button mat-button class="btn btn-primary" (click)="createDiplomaBlueprint()" cdkFocusInitial>Create</button>
+      </mat-dialog-actions>
+    </div>
+    
+    <div class="col-md-8">
+
+      <div class="diploma">
+        <div class="diploma-header">
+          <h2>{{diplomaBlueprintForm.get('title').value ||  'Diploma Title'}}</h2>
+        </div>
+        <div class="diploma-body">
+          <div class="diploma-content">
+            <h4>We Hereby Pronounce</h4>
+            <h2>Foulen Ben Falten</h2>
+            <h3>{{diplomaBlueprintForm.get('description').value ||  'For all efforts and hard work through the course'}}</h3>
+          </div>
+          <div class="diploma-image">
+            <h3>{{diplomaBlueprintForm.get('university').value ||  'INSAT'}}</h3>
+            <img [src]="diplomaBlueprintForm.get('logo').value ||  'assets/img/insatlogo.png'"/>
+          </div>
+        </div>
+        <div class="diploma-feet">
+          <h4>{{diplomaBlueprintForm.get('signature').value ||  'Mr. Samir Hamza'}}</h4>
+          <h4>HASH</h4>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  
+</div>

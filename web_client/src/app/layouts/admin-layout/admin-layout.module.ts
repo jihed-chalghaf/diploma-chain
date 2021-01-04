@@ -20,7 +20,7 @@ import { TypographyComponent } from '../../typography/typography.component';
 import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
-import { DiplomaIssueComponent,DiplomaHolderDialog } from './pages/diploma-issue/diploma-issue.component';
+import { DiplomaIssueComponent } from './pages/diploma-issue/diploma-issue.component';
 import { DiplomaListComponent } from './pages/diploma-list/diploma-list.component';
 import { StudentListComponent } from './pages/student-list/student-list.component';
 import { DiplomaBlueprintCreateComponent } from './pages/diploma-blueprint-create/diploma-blueprint-create.component';
@@ -41,7 +41,6 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     MatDialogModule
   ],
   entryComponents: [
-    DiplomaHolderDialog,
     DiplomaBlueprintCreateComponent
   ],
   declarations: [
@@ -56,7 +55,6 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     DiplomaListComponent,
     StudentListComponent,
     DiplomaBlueprintCreateComponent,
-    DiplomaHolderDialog
   ]
 })
 

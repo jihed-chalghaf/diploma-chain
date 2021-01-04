@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
-
+// High abstraction Components
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { StudentLayoutComponent } from './layouts/student-layout/student-layout.component';
 import { VerifierLayoutComponent } from './layouts/verifier-layout/verifier-layout.component';
 import { LandingComponent } from './pages/landing/landing.component';
+
+// Guards
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { StudentGuard } from './guards/student.guard';

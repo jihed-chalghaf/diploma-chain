@@ -33,8 +33,8 @@ export const AdminLayoutRoutes: Routes = [
         pathMatch: "full",
         redirectTo: 'dashboard'
     },
-    {
+   /*  {
         path: '**',
         redirectTo: ''
-    }
+    } */
 ];

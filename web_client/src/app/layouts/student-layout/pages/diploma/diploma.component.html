@@ -1,1 +1,52 @@
-<p>diploma works!</p>
+
+    <div class="card" (click)="popDiploma()">
+        <div class="card-header card-header-icon" [ngClass]="{'card-header-success': diploma.verified,'card-header-warning':!diploma.verified}">
+            <div class="card-icon">
+              <i class="material-icons">{{diploma.verified ?'check_box':'hourglass_top'}}</i>
+            </div>
+
+            <h4 class="card-title">{{diploma.title || 'N/A'}}</h4>
+        </div>
+        <div class="card-body">
+            <p class="card-category">Establishement Chair : {{diploma.signature || 'N/A'}} </p>
+            Establishement : {{diploma.university || 'N/A'}}
+          </div>
+    </div>
+
+
+
+
+<!-- this will be the template used for the modal-->
+
+<ng-template #diplomaModal >
+      <mat-dialog-content class="mat-typography">
+        <div class="col">
+
+            <div class="diploma">
+              <div class="diploma-header">
+                <h2>{{diploma.title ||  'Diploma Title'}}</h2>
+              </div>
+              <div class="diploma-body">
+                <div class="diploma-content">
+                  <h4>We Hereby Pronounce</h4>
+                  <h2>Foulen Ben Falten</h2>
+                  <h3>{{diploma.description ||  'For all efforts and hard work through the course'}}</h3>
+                </div>
+                <div class="diploma-image">
+                  <h3>{{diploma.university ||  'INSAT'}}</h3>
+                  <img [src]="diploma.logo ||  'assets/img/insatlogo.png'"/>
+                </div>
+              </div>
+              <div class="diploma-feet">
+                <h4>{{diploma.signature ||  'Mr. Samir Hamza'}}</h4>
+                <h4>HASH</h4>
+              </div>
+            </div>
+      
+          </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button class="btn btn-secondary" mat-dialog-close>cancel</button>
+      <button mat-button class="btn btn-primary" [mat-dialog-close]="true" cdkFocusInitial>Share It</button>
+    </mat-dialog-actions>
+</ng-template>

@@ -24,7 +24,7 @@ export class Web3Service {
 
   constructor(
     private router: Router,
-    private roleService: RoleService,
+    //private roleService: RoleService,
     private localService: LocalService
   ) {
     console.log("inside web3 service constructor");
@@ -61,7 +61,9 @@ export class Web3Service {
           this.mainAccount = window.ethereum.selectedAddress;
           console.log("is main account true ? ", this.mainAccount == accounts[0]);
           this.initChangingListener();
-          this.roleService.setRole();
+          // commenting the next line to remove the ciruclar dependecy
+          // we can call the setRole directly through the login component/page
+          // this.roleService.setRole();
           this.router.navigate(['/']);
         });
     } else {

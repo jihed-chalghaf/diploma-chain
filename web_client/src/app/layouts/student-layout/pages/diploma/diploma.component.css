@@ -1,0 +1,54 @@
+.diploma{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.diploma-header{
+    background-color: #c62828;
+    color:white;
+    width: 100%;
+    padding:2rem;
+
+}
+.diploma> h2,h3,h4{
+    margin: 0 auto;
+    text-align: center;
+
+}
+.diploma-body{
+    color: #dcdcdc;
+    background-color:#3C4858;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    grid-template-rows: 1fr;
+}
+.diploma-content{
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items:center;
+    
+}
+.diploma-image{
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    background-color:#bbbbbb;
+    justify-content: space-around;
+    align-items:center;
+}
+.diploma-image>img{
+    height: auto;
+    width:  5rem;
+}
+.diploma-feet{
+    color:#3C4858 ;
+    background-color:#dcdcdc;
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items:center;
+}

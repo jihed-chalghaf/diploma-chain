@@ -13,13 +13,30 @@ const diplomachain_artifacts = require("../../../../../../../blockchain/build/co
 export class StudentListComponent implements OnInit {
 
   Diplomachain: any;
-  students: Student[];
+  students: any[];
 
   constructor(
     private web3Service: Web3Service,
     private studentService: StudentService
     ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+
+    this.students = [
+      {
+        id:"0xrandomnumberbla",
+        firstName:"Random name"
+      },
+      {
+        id:"0xrandomnumberbla",
+        firstName:"Random name"
+      },
+      {
+        id:"0xrandomnumberbla",
+        firstName:"Random name"
+      },
+      
+    ];
+  }
 
 }

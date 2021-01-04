@@ -1,1 +1,15 @@
-<p>diploma-list works!</p>
+<div id="diploma-list" class="card-body d-flex flex-row flex-wrap">
+        
+    <!-- to be changed to receive real stuff-->
+    <app-diploma class="col-md-4 mx-4" [diploma]="diploma" *ngFor="let diploma of diplomas"></app-diploma>
+
+    <!-- <div class="card col-md-4 mx-4" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,20]">
+      <div class="card-header">
+        <h4 class="card-title">Diploma {{i}}</h4>
+        <p class="card-category">Category subtitle</p>
+      </div>
+      <div class="card-body">
+        Hooo
+      </div>
+    </div> -->
+  </div>
