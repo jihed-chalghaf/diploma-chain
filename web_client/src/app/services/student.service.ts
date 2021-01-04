@@ -108,4 +108,19 @@ export class StudentService implements OnInit {
       .catch((err) => console.log(err));
     });
   }
+
+  deleteStudent(student_addr: Address) {
+    this.Diplomachain.deployed().then((deployed) => {
+      deployed.deleteStudent
+      .call(
+        student_addr,
+        { from: this.web3Service.mainAccount }
+      ) 
+      .then((result) => {
+        return result;
+      })
+      .catch((err) => console.log(err));
+    });
+  }
+
 }

@@ -65,6 +65,9 @@ contract Diplomachain {
     // ==========events definition==========
     event LogRequestDiploma(address studentId);
     event LogAddDiploma(bytes32 diplomaId);
+    event LogAddStudent(address studentId);
+    event LogDeleteDiploma(bytes32 diplomaId);
+    event LogDeleteStudent(address studentId);
 
     // ==========Functions definition==========
     // verifyDiploma()
@@ -96,14 +99,39 @@ contract Diplomachain {
         students.push(
             Student(_id, _firstName, _lastName, _email, _nationality, _phoneNumber, _gender, _diplomas)
         );
+        emit LogAddStudent(_id);
     }
     // getStudent()
     function getStudent(address student_addr) public view returns (Student memory){
         require (studentsIndexes[student_addr] != 0, "You provided an invalid student address");
         return students[studentsIndexes[student_addr] - 1];
     }
-    // remove an element from an array and shift to avoid leaving gaps
-    function removeItem(Diploma[] storage array, uint256 index) private {
+    // deleteStudent()
+    function deleteStudent(address student_addr) public onlyAdmin {
+        // 1 - delete the student's diplomas
+        bytes32[] memory diplomas_ids = students[studentsIndexes[student_addr] - 1].diplomas;
+        for (uint i = 0; i < diplomas_ids.length; i++) {
+            removeDiplomaItem(diplomas, diplomasIndexes[diplomas_ids[i]] - 1);
+            delete diplomasIndexes[diplomas_ids[i]];
+            diplomasCount--;
+            emit LogDeleteDiploma(diplomas_ids[i]);
+        }
+        // 2 - delete the student
+        removeStudentItem(students, studentsIndexes[student_addr] - 1);
+        delete studentsIndexes[student_addr];
+        studentsCount--;
+        emit LogDeleteStudent(student_addr);
+    }
+    // remove an element from diplomas array and shift to avoid leaving gaps
+    function removeDiplomaItem(Diploma[] storage array, uint256 index) private {
+        for (uint i = index; i < array.length - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        delete array[array.length - 1];
+        array.pop();
+    }
+    // remove an element from students array and shift to avoid leaving gaps
+    function removeStudentItem(Student[] storage array, uint256 index) private {
         for (uint i = index; i < array.length - 1; i++) {
             array[i] = array[i + 1];
         }
@@ -126,7 +154,7 @@ contract Diplomachain {
             _id
         );
         // remove the diploma from the pending diplomas array
-        removeItem(pendingDiplomas, pendingDiplomasIndexes[_id] - 1);
+        removeDiplomaItem(pendingDiplomas, pendingDiplomasIndexes[_id] - 1);
         delete pendingDiplomasIndexes[_id];
         pendingDiplomasCount--;
         emit LogAddDiploma(_id);

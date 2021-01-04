@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { RoleService } from './role.service';
 import { LocalService } from './local.service';
+import { Address } from 'soltypes';
 declare let require: any;
 const Web3 = require('web3');
 const contract = require('@truffle/contract');
@@ -16,7 +17,7 @@ export class Web3Service {
   private web3: any;
   private accounts: string[];
   private logged: boolean = false;
-  public mainAccount: string;
+  public mainAccount: Address;
   public ready = false;
 
   public accountsObservable = new Subject<string[]>();
