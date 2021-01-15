@@ -8,8 +8,8 @@
             <h4 class="card-title">{{diploma.title || 'N/A'}}</h4>
         </div>
         <div class="card-body">
-            <p class="card-category">Establishement Chair : {{diploma.signature || 'N/A'}} </p>
-            Establishement : {{diploma.university || 'N/A'}}
+            <p class="card-category">Establishement Chair : Mr. Samir Hamza</p>
+            Establishement : INSAT
           </div>
     </div>
 
@@ -28,17 +28,17 @@
               </div>
               <div class="diploma-body">
                 <div class="diploma-content">
-                  <h4>We Hereby Pronounce</h4>
+                  <h4>We hereby congratulate our student</h4>
                   <h2>Foulen Ben Falten</h2>
-                  <h3>{{diploma.description ||  'For all efforts and hard work through the course'}}</h3>
+                  <h3>For the successful completion of this certification</h3>
                 </div>
                 <div class="diploma-image">
-                  <h3>{{diploma.university ||  'INSAT'}}</h3>
-                  <img [src]="diploma.logo ||  'assets/img/insatlogo.png'"/>
+                  <h3>INSAT</h3>
+                  <img src='assets/img/insatlogo.png'>
                 </div>
               </div>
               <div class="diploma-feet">
-                <h4>{{diploma.signature ||  'Mr. Samir Hamza'}}</h4>
+                <h4>Mr. Samir Hamza</h4>
                 <h4>HASH</h4>
               </div>
             </div>
@@ -46,7 +46,7 @@
           </div>
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-      <button mat-button class="btn btn-secondary" mat-dialog-close>cancel</button>
-      <button mat-button class="btn btn-primary" [mat-dialog-close]="true" cdkFocusInitial>Share It</button>
+      <button mat-button class="btn btn-secondary" mat-dialog-close>Cancel</button>
+      <button mat-button class="btn btn-primary" [mat-dialog-close]="true" cdkFocusInitial>Share</button>
     </mat-dialog-actions>
 </ng-template>

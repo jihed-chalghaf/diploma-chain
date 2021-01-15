@@ -1,4 +1,9 @@
-import { Component, HostBinding, OnInit } from "@angular/core";
+
+import { Component, OnInit } from '@angular/core';
+import { Diploma } from 'app/models/diploma.model';
+import { DiplomaService } from 'app/services/diploma.service';
+import { Bytes32 } from 'soltypes';
+
 
 @Component({
   selector: "app-diploma-verif",
@@ -10,13 +15,24 @@ export class DiplomaVerifComponent implements OnInit {
   selectedFile: File = null;
   fileUrl:string = null;
 
-  constructor() {}
+  diploma: Diploma;
+  verification_state: number;
+  // verification_state variable will guide us in showing the proper result to the verifier
+  // if the diploma is found => 1, then in the html file we'll display it
+  // if the diploma is not found => 2, we will display smth like "Sorry, this diploma does not exist!"
 
-  ngOnInit(): void {}
+  constructor(
+    private diplomaService: DiplomaService
+  ) { }
+
+  ngOnInit(): void {
+    this.verification_state = 0;
+
+  }
   onFileChange(event) {
     event.preventDefault();
     event.stopImmediatePropagation();
-    this.selectedFile = event.target.files[0];
+    this.selectedFile = event.target.files[0]
   }
   onDrop(event:DragEvent) {
     event.preventDefault();
@@ -24,6 +40,7 @@ export class DiplomaVerifComponent implements OnInit {
     console.log("onDrop : ",event.dataTransfer.files);
     this.selectedFile = event.dataTransfer.files[0];
     this.fileOver = false;
+
 
   }
   onDragOver(event) {
@@ -42,5 +59,13 @@ export class DiplomaVerifComponent implements OnInit {
     
     // if it is uploaded we can check the format and exectue the verification
     // else we need to download the data, check the format and then execute the verification phase 
+  }
+  verifyDiploma(id: Bytes32) {
+    this.diploma = this.diplomaService.verifyDiploma(id);
+    if(this.diploma) {
+      this.verification_state = 1;
+    }
+    else this.verification_state = 2;
+
   }
 }
