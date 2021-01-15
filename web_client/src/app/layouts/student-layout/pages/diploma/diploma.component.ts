@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 // temporary diploma structure (as it include different attributes)
+// here we also need to display all the relevant attributes in a diploma
+// otherwise we're only using the "title" attribute of each diploma in our html file
 interface Diploma{
   title?: string;
-  description?: string;
-  university?: string;
-  signature?: string;
-  logo?: string;
   verified?: boolean;
 }
 

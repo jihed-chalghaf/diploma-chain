@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Diploma } from 'app/models/diploma.model';
 
 @Component({
   selector: 'app-diploma-list',
@@ -6,86 +7,47 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./diploma-list.component.css']
 })
 export class DiplomaListComponent implements OnInit {
-  @Input() diplomas=[];
+  @Input() diplomas: any[];
+  
+
   constructor() { }
+
 
   ngOnInit(): void {
     if(this.diplomas.length===0){
       // generate fake diplomas for display purpose
-      this.diplomas=[{
-        title: "Hola",
-        description: "testing",
-        university: "Insat",
-        signature: "Joe Chalghaf",
+      // to avoid giving errors in the diploma component, I kept returning this wrong form
+      // I think we don't need the interface at all at that component for the following reasons:
+      // verified attribute can be discarded and we create a pendingDiplomas Component for the admin
+      // in all the cases, the fct in the smart contract returns only the verified diplomas..
+      this.diplomas = [
+      {
+        title: "Title 1",
         verified:true
-      },{
-        title: "Yo",
-        description: "oupa",
-        university: "Insat",
-        signature: "Khalil 3asir",
+      },
+      {
+        title: "Title 2",
         verified:false
       },
       {
-        title: "Salem",
-        description: "Labib",
-        university: "Insat",
-        signature: "Dali 3asir",
-
-      },{
-        title: "Salem",
-        description: "Labib",
-        university: "Insat",
-        signature: "Dali 3asir",
-
-      },{
-        title: "Salem",
-        description: "Labib",
-        university: "Insat",
-        signature: "Dali 3asir",
-
-      },{
-        title: "Salem",
-        description: "Labib",
-        university: "Insat",
-        signature: "Dali 3asir",
-
-      },{
-        title: "Salem",
-        description: "Labib",
-        university: "Insat",
-        signature: "Dali 3asir",
-
-      },{
-        title: "Salem",
-        description: "Labib",
-        university: "Insat",
-        signature: "Dali 3asir",
-
-      },{
-        title: "Salem",
-        description: "Labib",
-        university: "Insat",
-        signature: "Dali 3asir",
-
-      },{
-        title: "Salem",
-        description: "Labib",
-        university: "Insat",
-        signature: "Dali 3asir",
-
-      },{
-        title: "Salem",
-        description: "Labib",
-        university: "Insat",
-        signature: "Dali 3asir",
-
-      },{
-        title: "Salem",
-        description: "Labib",
-        university: "Insat",
-        signature: "Dali 3asir",
-
-      },];
+        title: "Title 3",
+      },
+      {
+        title: "Title 4",
+      },  
+      {
+        title: "Title 5",
+      },
+      {
+        title: "Title 6",
+      },
+      {
+        title: "Title 7",
+      },
+      {
+        title: "Title 8",
+      }    
+      ];
     }
   }
 
