@@ -1,6 +1,15 @@
-<h1>hi</h1>
-<ul class="step-list">
-    <li  class="step" *ngFor="let check of checkPoints"> 
+<ul class="step-list" *ngIf="checkPoints && checkPoints.length!=0" [ngClass]="{'horiz':isHorizantale}">
+    <li *ngFor="let check of checkPoints">
+        <span class="step" [ngClass]="{'step-last':check.isEnd,'step-done':check.completed}">
+            <p *ngIf="!check.isEnd">{{check.name}}</p>
+            <i class="material-icons" *ngIf="check.isEnd && check.completed" >check_circle_outline</i>
+        </span>
+        <span class="step-link" [ngClass]="{'step-link-done':check.completed}" *ngIf="!check.isEnd">
+        </span>
     </li>
-    
 </ul>
+
+<h5 *ngIf="!checkPoints || !checkPoints.length">
+    No steps provided, Please make to provide the right input for the component
+
+</h5>

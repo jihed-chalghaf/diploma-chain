@@ -15,6 +15,14 @@ export class DiplomaIssueComponent implements OnInit {
   students: Student[]=[];
   newStudent: Student;
 
+  // check points used to indicate in which phase the issuing 
+
+  checkPoints = [
+    {name:"Creating",description:"uploading the diploma file",completed:true,isEnd:false},
+    {name:"Hashing",description:"Hashing the diploma content",completed:false,isEnd:false},
+    {name:"Issuing",description:"Interacting with the blockchain",completed:false,isEnd:false},
+    {name:"Done",description:"Done",completed:true,isEnd:true}
+  ]
   constructor(
     public dialog: MatDialog,
     private studentService: StudentService

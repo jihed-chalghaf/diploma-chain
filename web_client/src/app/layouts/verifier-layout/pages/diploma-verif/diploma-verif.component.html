@@ -1,1 +1,60 @@
-<p>diploma-verif works!</p>
+<div
+  class="card"
+  [ngClass]="{ hover: fileOver }"
+  (dragstart)="$event.preventDefault()"
+  (dragend)="$event.preventDefault()"
+  (dragover)="$event.preventDefault();onDragOver($event)"
+  (dragenter)="$event.preventDefault()"
+  (dragleave)="$event.preventDefault();onDragleave($event)"
+  (drop)="$event.preventDefault();onDrop($event)"
+>
+  <div class="card-header card-header-icon card-header-info">
+    <div class="card-icon">
+      <i class="material-icons">check_circle</i>
+    </div>
+    <h4 class="card-title">Verifiy a digital diploma</h4>
+  </div>
+  <div class="card-body">
+    <div>
+      <mat-form-field>
+        <mat-label>Digital Diploma URL</mat-label>
+        <input
+          matInput
+          [(ngModel)]="fileUrl"
+          type="text"
+          placeholder="http(s)://.*"
+        />
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        (click)="$event.preventDefault(); fileUpload.click()"
+        for="fileUpload"
+        class="btn btn-secondary"
+      >
+        Upload a file
+      </button>
+      <h5 *ngIf="selectedFile" style="display: inline; margin-left: 1rem">
+        {{ selectedFile.name }} [{{ selectedFile.size }}]
+      </h5>
+      <input
+        hidden="true"
+        #fileUpload
+        id="fileUpload"
+        type="file"
+        accept=".json"
+        (change)="onFileChange($event)"
+      />
+    </div>
+    <button
+      mat-raised-button
+      class="btn btn-primary pull-right"
+      (click)="onVerify()"
+    >
+      Verify
+    </button>
+    <button mat-raised-button class="btn btn-secondary pull-right">
+      More details
+    </button>
+  </div>
+</div>
