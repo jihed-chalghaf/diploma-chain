@@ -14,13 +14,10 @@ export class DiplomaBlueprintCreateComponent implements OnInit {
   ngOnInit(): void {
     this.diplomaBlueprintForm = new FormGroup({
       title: new FormControl(),
-      //description: new FormControl(),
       //university: new FormControl(),
       //signature: new FormControl(),
-      owner: new FormControl(),
       speciality: new FormControl(),
-      honors: new FormControl(),
-      logo: new FormControl(),
+      description: new FormControl(),
     });
   }
   close(): void {

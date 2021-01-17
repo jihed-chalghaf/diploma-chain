@@ -11,34 +11,15 @@
             <mat-label>Title</mat-label>
             <input matInput formControlName="title" placeholder="Ex. Eng diploma" >
           </mat-form-field>
-          <!--<mat-form-field >
+          <mat-form-field >
             <mat-label>Description</mat-label>
             <textarea matInput formControlName="description" placeholder="Ex. this diploma..."></textarea>
-          </mat-form-field>
-          <mat-form-field >
-            <mat-label>University Name</mat-label>
-            <input matInput formControlName="university" placeholder="Ex. INSAT"/>
-          </mat-form-field>
-          <mat-form-field >
-            <mat-label>Signature</mat-label>
-            <input matInput formControlName="signature" placeholder="Ex. Mr. Foulen ben falten"/>
-          </mat-form-field>-->
-          <mat-form-field >
-            <mat-label>Owner</mat-label>
-            <input matInput formControlName="owner" placeholder="Ex. 0xrandomaddress"/>
           </mat-form-field>
           <mat-form-field >
             <mat-label>Speciality</mat-label>
             <input matInput formControlName="speciality" placeholder="Ex. Cybersecurity"/>
           </mat-form-field>
-          <mat-form-field >
-            <mat-label>Honors</mat-label>
-            <input matInput formControlName="honors" placeholder="Ex. Academic"/>
-          </mat-form-field>
-          <mat-form-field >
-            <mat-label>Logo url</mat-label>
-            <input matInput formControlName="logo" placeholder="Ex. *"/>
-          </mat-form-field>
+  
         </form>
       </mat-dialog-content>
       <mat-dialog-actions align="end">
@@ -55,13 +36,13 @@
         </div>
         <div class="diploma-body">
           <div class="diploma-content">
-            <h4>We hereby congratulate our student</h4>
+            <h4>We hereby congratulate our student specialized in {{diplomaBlueprintForm.get('speciality').value ||  'SPECIALITY'}}</h4>
             <h2>Foulen Ben Falten</h2>
-            <h3>For the successful completion of this certification</h3>
+            <h4>{{diplomaBlueprintForm.get('description').value ||  'For the successful completion of this certification'}}  </h4>
           </div>
           <div class="diploma-image">
             <h3>INSAT</h3>
-            <img [src]="diplomaBlueprintForm.get('logo').value ||  'assets/img/insatlogo.png'">
+            <img src="assets/img/insatlogo.png">
           </div>
         </div>
         <div class="diploma-feet">

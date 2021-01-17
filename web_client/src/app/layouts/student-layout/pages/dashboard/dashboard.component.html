@@ -7,29 +7,8 @@
         <button class="btn btn-secondary btn-fab btn-round pull-right" (click)="openDialog()"><i class="material-icons"  >add</i></button>
       </div>
       
-      <app-diploma-list [diplomas]='diplomas'></app-diploma-list>
       <!-- to be changed to receive real stuff-->
-      <!-- <div id="diploma-list" class="card-body d-flex flex-row flex-wrap">
-        
-        <app-diploma class="col-md-4 mx-4" [diploma]="i" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,20]"></app-diploma>
-
-        <div class="card col-md-4 mx-4" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,20]">
-          <div class="card-header">
-            <h4 class="card-title">Diploma {{i}}</h4>
-            <p class="card-category">Category subtitle</p>
-          </div>
-          <div class="card-body">
-            Hooo
-          </div>
-        </div>
-       </div> 
-      -->
-      <!--  <div class="card-footer clearfix">
-        
-        <button mat-raised-button class="btn btn-primary pull-left">Issue</button>
-        <button mat-raised-button class="btn btn-fab btn-round pull-right">+</button>
-        
-      </div> -->
+      <app-diploma-list [diplomas]='diplomas'></app-diploma-list>
     </div>
   </div>
   <div class="col-md-4">

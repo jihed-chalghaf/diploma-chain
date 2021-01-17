@@ -14,7 +14,8 @@ export class DiplomaListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if(this.diplomas.length===0){
+    console.log(this.diplomas)
+    if(!this.diplomas || this.diplomas.length===0){
       // generate fake diplomas for display purpose
       // to avoid giving errors in the diploma component, I kept returning this wrong form
       // I think we don't need the interface at all at that component for the following reasons:
