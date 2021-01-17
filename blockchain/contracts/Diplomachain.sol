@@ -90,7 +90,7 @@ contract Diplomachain {
         string memory _phoneNumber,
         string memory _gender,
         bytes32[] memory _diplomas
-    ) public onlyAdmin {
+    ) public {
         require(studentsIndexes[_id] == 0, "Student already exists");
         require(adminsIndexes[_id] == 0, "An admin cannot enroll as a student");
         require(issuersIndexes[_id] == 0, "An issuer cannot enroll as a student");

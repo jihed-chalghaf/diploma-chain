@@ -6,12 +6,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { StudentLayoutComponent } from './layouts/student-layout/student-layout.component';
 import { VerifierLayoutComponent } from './layouts/verifier-layout/verifier-layout.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { LandingComponent } from './pages/landing/landing.component';
 
 // Guards
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { StudentGuard } from './guards/student.guard';
+import { UnauthGuard } from './guards/unauth.guard';
+
 
 const routes: Routes =[
   {
@@ -38,6 +41,15 @@ const routes: Routes =[
     children: [{
       path: '',
       loadChildren: './layouts/verifier-layout/verifier-layout.module#VerifierLayoutModule'
+    }]
+  },
+  {
+    path: 'auth',
+    component: AuthLayoutComponent,
+    canActivate: [UnauthGuard],
+    children: [{
+      path: '',
+      loadChildren: './layouts/auth-layout/auth-layout.module#AuthLayoutModule'
     }]
   },
   {

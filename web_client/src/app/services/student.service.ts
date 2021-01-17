@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Web3Service } from './web3.service';
+import { Router } from '@angular/router';
 import { Address, Bytes32 } from 'soltypes';
 declare let require: any;
 const diplomachain_artifacts = require("../../../../blockchain/build/contracts/Diplomachain.json");
@@ -18,7 +19,10 @@ export class StudentService implements OnInit {
   diplomas_ids: Bytes32[];
   index: number;
 
-  constructor(private web3Service: Web3Service) { }
+  constructor(
+    private web3Service: Web3Service,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.web3Service
@@ -99,10 +103,10 @@ export class StudentService implements OnInit {
         student.nationality,
         student.phoneNumber,
         student.gender,
-        student.diplomas,
-        { from: this.web3Service.mainAccount }
+        student.diplomas
       ) 
       .then((result) => {
+        this.router.navigate(['/']);
         return result;
       })
       .catch((err) => console.log(err));

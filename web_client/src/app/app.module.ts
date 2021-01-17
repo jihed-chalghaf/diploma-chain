@@ -22,6 +22,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { Web3Service } from './services/web3.service';
 import { StudentLayoutComponent } from './layouts/student-layout/student-layout.component';
 import { VerifierLayoutComponent } from './layouts/verifier-layout/verifier-layout.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { LandingComponent } from './pages/landing/landing.component';
 
 @NgModule({
@@ -39,6 +40,7 @@ import { LandingComponent } from './pages/landing/landing.component';
     AdminLayoutComponent,
     StudentLayoutComponent,
     VerifierLayoutComponent,
+    AuthLayoutComponent,
     LandingComponent
   ],
   providers: [
