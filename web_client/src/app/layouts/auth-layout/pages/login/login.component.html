@@ -1,0 +1,19 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-danger">
+            <div class="row justify-content-center">
+                <h1 class="card-title">Welcome!</h1>
+            </div>
+            <div class="row justify-content-center">
+                <h3 class="card-category">Here you can login using Metamask.</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <a *ngIf="!web3Service.isLogged()">
+                    <button class="btn btn--small" (click)="web3Service.login()">Login</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

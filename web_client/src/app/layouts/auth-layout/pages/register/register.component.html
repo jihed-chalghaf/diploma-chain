@@ -1,0 +1,114 @@
+<div class="center">
+    <div class="card">
+        <div class="card-header card-header-danger">
+            <div class="row justify-content-center">
+                <h1 class="card-title">Welcome!</h1>
+            </div>
+            <div class="row justify-content-center">
+                <h3 class="card-category">Here you can create a new account.</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <form role="form" (ngSubmit)="register(registerForm)" #registerForm="ngForm">
+                <div class="form-group">
+                    <div *ngIf="error" role="alert" class="alert alert-danger alert-dismissible">
+                        <span class=" alert-icon">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </span>
+                        <span class=" alert-text">{{this.errorText}}</span>
+                    </div>
+                    <alert *ngIf="success" class="alert-dismissible">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button aria-label="Close" (click)="closeSuccess()" class="close" type="button">
+                                <span aria-hidden="true">×</span>
+                                <span class="sr-only">Close</span>
+                            </button>
+                            <span class=" success-icon">
+                                <i class="ni ni-like-2"></i>
+                            </span>
+                            <span class=" alert-text">{{msg}}</span>
+                        </div>
+                    </alert>
+                    <div class="input-group input-group-alternative mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                        </div>
+                        <input class="form-control" name="id" placeholder="An address from your wallet" type="text" required ngModel>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                        </div>
+                        <input class="form-control" name="firstName" placeholder="First Name" type="text" required ngModel>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                        </div>
+                        <input class="form-control" name="lastName" placeholder="Last Name" type="text" required ngModel>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                        </div>
+                        <input class="form-control" name="email" placeholder="foulen.falten@gmail.com" type="email" required ngModel>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                        </div>
+                        <select class="form-control" name="nationality" placeholder="Nationality" required ngModel>
+                            <option value="" disabled selected>Select your nationality</option>
+					        <option [value]="nationality" *ngFor="let nationality of nationalitiesList"> {{nationality}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                        </div>
+                        <input class="form-control" name="phoneNumber" placeholder="Phone number" type="text" required ngModel>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-alternative mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                        </div>
+                        <select class="form-control" name="gender" placeholder="Gender" type="text" required ngModel>
+                            <option value="" disabled selected>Select your gender</option>
+					        <option [value]="gender" *ngFor="let gender of gendersList"> {{gender}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row my-4">
+                    <div class="col-12">
+                        <div class="custom-control custom-control-alternative custom-checkbox">
+                            <input class="custom-control-input" id="customCheckRegister" type="checkbox"
+                                [(ngModel)]="accepted" name="accepted">
+                            <label class="custom-control-label" for="customCheckRegister">
+                                <span class="text-muted">I agree with the <a href="#!">Privacy Policy</a></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary mt-4" [disabled]="!accepted"
+                        [ngClass]="{'disabled': !accepted}">Create account</button>
+                </div>
+            </form>
+            <div class="row justify-content-center">
+                <a [routerLink]="'/auth/login'" class="text-dark"><small>Already a member ?</small></a>
+            </div>
+        </div>
+    </div>
+</div>
