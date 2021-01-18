@@ -25,7 +25,7 @@
                   <td>{{ student.id }}</td>
                   <td>{{ student.firstName ? student.firstName:'N/A'}}</td>
                   <td>{{ 'diplomaId'}}</td>
-                  <button class="btn btn-danger btn-fab " (click)="deleteStudent(student.id)"><i class="material-icons">delete</i></button>
+                  <button class="btn btn-danger btn-fab " ><i class="material-icons">delete</i></button>
                 </tr>
               </tbody>
             </table>
@@ -53,7 +53,7 @@
   <mat-dialog-content class="mat-typography">
     <form >
       <mat-form-field>
-        <mat-label>Holder Address</mat-label>
+        <mat-label>Choose holder</mat-label>
         <input matInput name="address" [(ngModel)]="data.address" placeholder="0xFF........AA" />
       </mat-form-field>
       <mat-form-field>

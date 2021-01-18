@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
-import { RoleService } from './role.service';
-import { LocalService } from './local.service';
-import { Address } from 'soltypes';
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
+import { Router } from "@angular/router";
+import { RoleService } from "./role.service";
+import { LocalService } from "./local.service";
+import { Address } from "soltypes";
 declare let require: any;
-const Web3 = require('web3');
-const contract = require('@truffle/contract');
+const Web3 = require("web3");
+const contract = require("@truffle/contract");
 
 declare let window: any;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class Web3Service {
   private web3: any;
@@ -21,7 +21,6 @@ export class Web3Service {
   public ready = false;
 
   public accountsObservable = new Subject<string[]>();
-
 
   constructor(
     private router: Router,
@@ -34,11 +33,11 @@ export class Web3Service {
     return this.logged;
   }
   public login() {
-    console.log('logging in');
+    console.log("logging in");
     this.bootstrapWeb3();
   }
   public logout() {
-    console.log('log out');
+    console.log("log out");
     this.logged = false;
     this.web3 = null;
     this.accounts = null;
@@ -48,33 +47,37 @@ export class Web3Service {
   }
   public bootstrapWeb3() {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-    if (typeof window.ethereum !== 'undefined') {
-      console.log('Metamask found');
+    if (typeof window.ethereum !== "undefined") {
+      console.log("Metamask found");
       // Use Mist/MetaMask's provider
       console.log(window.ethereum);
-      window.ethereum.enable()
-        .then(accounts => {
+      window.ethereum.enable().then((accounts,error) => {
 
-          this.web3 = new Web3(window.ethereum);
-          this.logged = true;
-          console.log('Using metmask as web3 provider');
-          console.log("provided accounts, ", accounts)
-          this.mainAccount = window.ethereum.selectedAddress;
-          console.log("is main account true ? ", this.mainAccount == accounts[0]);
-          this.initChangingListener();
-          // commenting the next line to remove the ciruclar dependecy
-          // we can call the setRole directly through the login component/page
-          // this.roleService.setRole();
-          this.router.navigate(['/']);
-        });
+        this.web3 = new Web3(window.ethereum);
+        this.logged = true;
+        console.log("Using metmask as web3 provider");
+        console.log("provided accounts, ", accounts);
+        this.mainAccount = window.ethereum.selectedAddress;
+        console.log("is main account true ? ", this.mainAccount == accounts[0]);
+        this.initChangingListener();
+        // commenting the next line to remove the ciruclar dependecy
+        // we can call the setRole directly through the login component/page
+        // this.roleService.setRole();
+        this.router.navigate(["/"]);
+      }).catch(err => {
+        console.log("error in enabling the metamask ", err)
+      });
     } else {
-      console.log('No web3? You should consider trying MetaMask!');
+      console.log("No web3? You should consider trying MetaMask!");
       // TODO : prompt for the user to install MetaMask
       // Hack to provide backwards compatibility for Truffle, which uses web3js 0.20.x
-      Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
+      Web3.providers.HttpProvider.prototype.sendAsync =
+        Web3.providers.HttpProvider.prototype.send;
       // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-      this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
-      console.log("Using a fallback")
+      this.web3 = new Web3(
+        new Web3.providers.HttpProvider("http://localhost:7545")
+      );
+      console.log("Using a fallback");
     }
 
     // setInterval(() => this.refreshAccounts(), 1000);
@@ -82,8 +85,8 @@ export class Web3Service {
 
   public async artifactsToContract(artifacts) {
     if (!this.web3) {
-      console.log('Web3 not found!')
-      const delay = new Promise(resolve => setTimeout(resolve, 100));
+      console.log("Web3 not found!");
+      const delay = new Promise((resolve) => setTimeout(resolve, 100));
       await delay;
       return await this.artifactsToContract(artifacts);
     }
@@ -91,20 +94,25 @@ export class Web3Service {
     const contractAbstraction = contract(artifacts);
     contractAbstraction.setProvider(this.web3.currentProvider);
     return contractAbstraction;
-
   }
 
   private async refreshAccounts() {
     const accs = await this.web3.eth.getAccounts();
-    console.log('Refreshing accounts');
+    console.log("Refreshing accounts");
     // Get the initial account balance so it can be displayed.
     if (accs.length === 0) {
-      console.warn('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
+      console.warn(
+        "Couldn't get any accounts! Make sure your Ethereum client is configured correctly."
+      );
       return;
     }
 
-    if (!this.accounts || this.accounts.length !== accs.length || this.accounts[0] !== accs[0]) {
-      console.log('Observed new accounts');
+    if (
+      !this.accounts ||
+      this.accounts.length !== accs.length ||
+      this.accounts[0] !== accs[0]
+    ) {
+      console.log("Observed new accounts");
 
       this.accountsObservable.next(accs);
       this.accounts = accs;
@@ -115,41 +123,17 @@ export class Web3Service {
   }
 
   public initChangingListener() {
-    window.ethereum.on('accountsChanged', (accounts) => {
+    window.ethereum.on("accountsChanged", (accounts) => {
       console.log("Accounts changed to : ", accounts);
-      if(accounts.length ==0){
+      if (accounts.length == 0) {
         this.logout();
-      }else{
+      } else {
         this.mainAccount = window.ethereum.selectedAddress;
-
       }
-    })
+    });
 
-    window.ethereum.on('chainChanged', (chainId) => {
-      console.log('network/chain changed to : ', chainId)
-    })
+    window.ethereum.on("chainChanged", (chainId) => {
+      console.log("network/chain changed to : ", chainId);
+    });
   }
-  public timeMagic(seconds) {
-    console.log(window.ethereum);
-    /*
-    window.ethereum.send('evm_increaseTime', {seconds})
-      .then(res=> console.log("time magic res ",res))
-      .catch(err => console.log(err))
-   */
-
-    window.ethereum.sendAsync({
-      method: 'evm_increaseTime',
-      params: [seconds],
-      from: this.mainAccount,
-    }, (err, res) => {
-      console.log("sendasync res : ", res, err);
-      window.ethereum.sendAsync({
-        method: 'evm_mine',
-        params: [],
-        from: this.mainAccount,
-      },(res,err)=> console.log("mine res ",res,err))
-    })
-    return true;
-  }
-
 }

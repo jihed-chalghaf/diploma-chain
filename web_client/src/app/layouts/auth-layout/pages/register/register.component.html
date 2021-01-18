@@ -1,6 +1,6 @@
 <div class="center">
     <div class="card">
-        <div class="card-header card-header-danger">
+        <div class="card-header card-header-info">
             <div class="row justify-content-center">
                 <h1 class="card-title">Welcome!</h1>
             </div>
@@ -17,7 +17,7 @@
                         </span>
                         <span class=" alert-text">{{this.errorText}}</span>
                     </div>
-                    <alert *ngIf="success" class="alert-dismissible">
+                    <alert  class="alert-dismissible">
                         <div class="alert alert-success alert-dismissible" role="alert">
                             <button aria-label="Close" (click)="closeSuccess()" class="close" type="button">
                                 <span aria-hidden="true">×</span>
@@ -58,36 +58,6 @@
                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                         </div>
                         <input class="form-control" name="email" placeholder="foulen.falten@gmail.com" type="email" required ngModel>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-group input-group-alternative mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                        </div>
-                        <select class="form-control" name="nationality" placeholder="Nationality" required ngModel>
-                            <option value="" disabled selected>Select your nationality</option>
-					        <option [value]="nationality" *ngFor="let nationality of nationalitiesList"> {{nationality}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-group input-group-alternative mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                        </div>
-                        <input class="form-control" name="phoneNumber" placeholder="Phone number" type="text" required ngModel>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-group input-group-alternative mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                        </div>
-                        <select class="form-control" name="gender" placeholder="Gender" type="text" required ngModel>
-                            <option value="" disabled selected>Select your gender</option>
-					        <option [value]="gender" *ngFor="let gender of gendersList"> {{gender}}</option>
-                        </select>
                     </div>
                 </div>
                 <div class="row my-4">

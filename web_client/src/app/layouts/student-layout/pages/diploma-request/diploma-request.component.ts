@@ -30,9 +30,7 @@ export class DiplomaRequestComponent implements OnInit {
   requestDiploma() {
     // for the issuer since we only have INSAT, we'll select it's address by default in the form
     this.requested_diploma.issuer = this.data.issuer;
-    this.requested_diploma.speciality = this.data.speciality;
     this.requested_diploma.honors = this.data.honors;
-    this.requested_diploma.title = this.data.title;
     this.requested_diploma.dateObtained = Date.now();
     this.diplomaService.requestDiploma(this.requested_diploma);
   }

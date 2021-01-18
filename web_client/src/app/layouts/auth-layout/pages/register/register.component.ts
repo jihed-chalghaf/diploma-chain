@@ -42,9 +42,6 @@ export class RegisterComponent implements OnInit {
       this.newStudent.firstName = form.controls.firstName.value;
       this.newStudent.lastName = form.controls.lastName.value;
       this.newStudent.email = form.controls.email.value;
-      this.newStudent.nationality = form.controls.nationality.value;
-      this.newStudent.phoneNumber = form.controls.phoneNumber.value;
-      this.newStudent.gender = form.controls.gender.value;
       this.newStudent.diplomas = this.diplomas;
 
       // a little log for testing purposes

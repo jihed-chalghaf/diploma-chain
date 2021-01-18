@@ -42,9 +42,7 @@ export class DiplomaService implements OnInit {
       deployed.requestDiploma
         .call(
           diploma.issuer,
-          diploma.speciality,
           diploma.honors,
-          diploma.title,
           diploma.dateObtained,
           { from: this.web3Service.mainAccount }
         )
@@ -55,7 +53,9 @@ export class DiplomaService implements OnInit {
     });
   }
 
-  getDiplomaIndex(diploma_id: Bytes32): number {
+  // No need to get the index for diploma (we can get it fully)
+
+  /* getDiplomaIndex(diploma_id: Bytes32): number {
     this.Diplomachain.deployed().then((deployed) => {
       deployed.getDiplomaIndex
         .call(diploma_id, { from: this.web3Service.mainAccount })
@@ -65,7 +65,7 @@ export class DiplomaService implements OnInit {
         .catch((err) => console.log(err));
     });
     return this.index;
-  }
+  } */
 
   issueDiploma(diploma: Diploma) {
     this.Diplomachain.deployed().then((deployed) => {
@@ -73,9 +73,7 @@ export class DiplomaService implements OnInit {
         .call(
           diploma.owner,
           diploma.issuer,
-          diploma.speciality,
           diploma.honors,
-          diploma.title,
           diploma.dateObtained,
           { from: this.web3Service.mainAccount }
         )

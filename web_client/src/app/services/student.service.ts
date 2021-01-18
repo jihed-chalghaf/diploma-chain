@@ -68,7 +68,9 @@ export class StudentService implements OnInit {
     return this.diplomas;
   }
 
-  getStudentDiplomasIds(student: Address): Bytes32[] {
+  // No need to get Diplomas Id when we could get their full objects
+
+  /* getStudentDiplomasIds(student: Address): Bytes32[] {
     this.Diplomachain.deployed().then((deployed) => {
       deployed.getStudentDiplomasIds
       .call(student, { from: this.web3Service.mainAccount })
@@ -78,9 +80,10 @@ export class StudentService implements OnInit {
       .catch((err) => console.log(err));
     });
     return this.diplomas_ids;
-  }
+  } */
+  // No need to get the index when we can get the full object (better for performance)
 
-  getStudentIndex(student: Address): number {
+  /* getStudentIndex(student: Address): number {
     this.Diplomachain.deployed().then((deployed) => {
       deployed.getStudentIndex
       .call(student, { from: this.web3Service.mainAccount })
@@ -90,7 +93,7 @@ export class StudentService implements OnInit {
       .catch((err) => console.log(err));
     });
     return this.index;
-  }
+  } */
   
   addStudent(student: Student) {
     this.Diplomachain.deployed().then((deployed) => {
@@ -100,9 +103,6 @@ export class StudentService implements OnInit {
         student.firstName,
         student.lastName,
         student.email,
-        student.nationality,
-        student.phoneNumber,
-        student.gender,
         student.diplomas
       ) 
       .then((result) => {
@@ -112,8 +112,8 @@ export class StudentService implements OnInit {
       .catch((err) => console.log(err));
     });
   }
-
-  deleteStudent(student_addr: Address) {
+  // deleting is not adequate 
+  /* deleteStudent(student_addr: Address) {
     this.Diplomachain.deployed().then((deployed) => {
       deployed.deleteStudent
       .call(
@@ -125,6 +125,6 @@ export class StudentService implements OnInit {
       })
       .catch((err) => console.log(err));
     });
-  }
+  } */
 
 }

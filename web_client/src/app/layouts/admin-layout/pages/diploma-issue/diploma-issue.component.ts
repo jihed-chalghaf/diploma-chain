@@ -37,10 +37,12 @@ export class DiplomaIssueComponent implements OnInit {
     //this.students.push(student);
     this.studentService.addStudent(student);
   }
-  
   deleteStudent(studentId:Address){
+    // deleting the student from the list and not from the blockchain storage 
+    // also the student object will be created when auth this is why we don't need it deletion anymore
+
     //this.students= this.students.filter(student=> student.id!=studentId);
-    this.studentService.deleteStudent(studentId);
+    /* this.studentService.deleteStudent(studentId); */
   }
   // this will open to add another diploma to be issued
   openDialog(){
@@ -57,30 +59,8 @@ export class DiplomaIssueComponent implements OnInit {
         this.newStudent.firstName = data.firstName;
         this.newStudent.lastName = data.lastName;
         this.newStudent.email = data.email;
-        this.newStudent.gender = data.gender;
-        this.newStudent.nationality = data.nationality;
         this.addStudent(this.newStudent);
       }
     });
   }
 }
-
-/* @Component({
-  selector: 'app-diploma-holder-add',
-  templateUrl: './diploma-holder-add.html',
-})
-export class DiplomaHolderDialog implements OnInit {
-
-  constructor(
-    public dialogRef: MatDialogRef<DiplomaHolderDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DiplomaHolderData) {}
-
-  ngOnInit(): void{
-    
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-} */
