@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ConversionService } from 'app/services/conversion.service';
 
 // temporary diploma structure (as it include different attributes)
 // here we also need to display all the relevant attributes in a diploma
@@ -17,11 +19,22 @@ interface Diploma{
 export class DiplomaComponent implements OnInit {
   @Input() diploma:Diploma;
   @ViewChild('diplomaModal',{read:TemplateRef}) diplomaModalRef:TemplateRef<any>;
-  constructor(public dialog: MatDialog) { }
+  downloadJsonHref: SafeUrl;
+  fileName: string = "download_diploma.json";
+
+  constructor(
+    public dialog: MatDialog, 
+    private sanitizer: DomSanitizer,
+    private conversionService: ConversionService
+  ) { }
 
   ngOnInit(): void {
+    this.generateDownloadJsonUri();
+    // commenting this to avoid compilation problems, when we force the input diploma to be of type Diploma, we'll be good to go
+    //this.fileName = this.diploma.id + ".json";
   }
-  popDiploma(){
+
+  popDiploma() {
     if(this.diploma.verified){
       
       const dialogRef = this.dialog.open(this.diplomaModalRef, {
@@ -34,6 +47,10 @@ export class DiplomaComponent implements OnInit {
         console.log(result)
       })
     }
+  }
 
+  generateDownloadJsonUri() {
+    /*var uri = this.sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8," + encodeURIComponent(this.conversionService.diplomaToJsonString(this.diploma)));
+    this.downloadJsonHref = uri;*/
   }
 }

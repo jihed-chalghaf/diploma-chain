@@ -16,7 +16,7 @@
       <div id="diploma-list" *ngIf="createdDiplomas.length!=0" class="card-body d-flex flex-row flex-wrap">
         <div class="card col-md-4 mx-4" *ngFor="let diploma of createdDiplomas">
           <div class="card-header">
-            <h4 class="card-title">{{diploma.title || 'N/A'}}</h4>
+            <h4 class="card-title">{{'diploma.title' || 'N/A'}}</h4>
             <p class="card-category">Establishement Chair : Samir Hamza </p>
           </div>
           <div class="card-body">

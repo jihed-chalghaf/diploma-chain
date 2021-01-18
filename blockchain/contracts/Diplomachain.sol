@@ -85,13 +85,20 @@ contract Diplomachain {
     event LogAddDiplomaBlueprint(bytes32 diplomaBlueprintId);
     event LogDeleteDiploma(bytes32 diplomaId);
     event LogDeleteStudent(address studentId);
+    
     // ==========Functions definition==========
     // verifyDiploma()
-   /*  function verifyDiploma(bytes32 diplomaId) public view returns (Diploma memory){
-        require (diplomasIndexes[diplomaId] != 0, "You provided an invalid diploma identifier");
-        return diplomas[diplomasIndexes[diplomaId] - 1];
-    } */
-    // getDiploma() : for now, verifyDiploma() has the same code as getDiploma(), probably we'll remove the other fct
+    function verifyDiploma(Diploma memory diploma) public view returns (bool){
+        require (diplomasIndexes[diploma.id] != 0, "You provided an invalid diploma identifier");
+        Diploma storage stored_diploma = diplomas[diplomasIndexes[diploma.id] - 1];
+        return (diploma.blueprintId == stored_diploma.blueprintId 
+                && diploma.owner == stored_diploma.owner 
+                && diploma.issuer == stored_diploma.issuer
+                && keccak256(abi.encodePacked(diploma.honors)) == keccak256(abi.encodePacked(stored_diploma.honors))
+                && diploma.dateObtained == stored_diploma.dateObtained
+        );
+    } 
+    // getDiploma()
     function getDiploma(bytes32 diplomaId) public view returns (Diploma memory){
         require (diplomasIndexes[diplomaId] != 0, "You provided an invalid diploma identifier");
         return diplomas[diplomasIndexes[diplomaId] - 1];

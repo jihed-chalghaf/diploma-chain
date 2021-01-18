@@ -14,6 +14,7 @@ export class DiplomaService implements OnInit {
   diploma: Diploma;
   diplomas: Diploma[];
   index: number;
+  exist: Boolean;
 
   constructor(private web3Service: Web3Service) { }
 
@@ -95,16 +96,16 @@ export class DiplomaService implements OnInit {
     });
   }
   
-  verifyDiploma(diploma_id: Bytes32): Diploma {
+  verifyDiploma(diploma: Diploma): Boolean {
     this.Diplomachain.deployed().then((deployed) => {
       deployed.verifyDiploma
-        .call(diploma_id)
+        .call(diploma)
         .then((result) => {
-          this.diploma = result;
+          this.exist = result;
         })
         .catch((err) => console.log(err));
     });
-    return this.diploma;
+    return this.exist;
   }
 
   getDiploma(diploma_id: Bytes32): Diploma {

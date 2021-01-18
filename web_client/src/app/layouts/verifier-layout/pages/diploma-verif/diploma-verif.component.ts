@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Diploma } from 'app/models/diploma.model';
 import { DiplomaService } from 'app/services/diploma.service';
-import { Bytes32 } from 'soltypes';
 
 
 @Component({
@@ -17,6 +16,7 @@ export class DiplomaVerifComponent implements OnInit {
 
   diploma: Diploma;
   verification_state: number;
+  diploma_exist: Boolean;
   // verification_state variable will guide us in showing the proper result to the verifier
   // if the diploma is found => 1, then in the html file we'll display it
   // if the diploma is not found => 2, we will display smth like "Sorry, this diploma does not exist!"
@@ -60,9 +60,9 @@ export class DiplomaVerifComponent implements OnInit {
     // if it is uploaded we can check the format and exectue the verification
     // else we need to download the data, check the format and then execute the verification phase 
   }
-  verifyDiploma(id: Bytes32) {
-    this.diploma = this.diplomaService.verifyDiploma(id);
-    if(this.diploma) {
+  verifyDiploma(diploma: Diploma) {
+    this.diploma_exist = this.diplomaService.verifyDiploma(diploma);
+    if(this.diploma_exist) {
       this.verification_state = 1;
     }
     else this.verification_state = 2;

@@ -54,11 +54,9 @@ export class DashboardComponent implements OnInit {
       console.log(data);
       // here we need to verify that all the required attributes are provided
       // before initiating the transaction and probably consuming gas!!
-      if(data && data.title && data.owner && data.speciality && data.honors && data.logo) {
+      if(data && data.owner && data.honors && data.logo) {
         this.newDiploma.owner = data.owner;
         this.newDiploma.issuer = this.web3Service.mainAccount;
-        this.newDiploma.title = data.title;
-        this.newDiploma.speciality = data.speciality;
         this.newDiploma.honors = data.honors;
         this.newDiploma.dateObtained = new Date().getTime();
         // we have 2 choices: 
