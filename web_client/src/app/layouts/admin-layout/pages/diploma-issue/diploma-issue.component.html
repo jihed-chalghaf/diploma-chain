@@ -8,24 +8,24 @@
           <button class="btn btn-secondary btn-fab btn-round pull-right" (click)="openDialog()"><i class="material-icons"  >add</i></button>
         </div>
         <div class="card-body">
-          <div class="card-content" *ngIf="students.length===0">
+          <div class="card-content" *ngIf="!students || students.length===0">
             <h3 class="mx-auto"> You can add diploma holders</h3>
           </div>
-          <div class="card-content table-responsive table-full-width" *ngIf="students.length!=0">
+          <div class="card-content table-responsive table-full-width" *ngIf="students && students.length!=0">
             <table class="table">
               <thead class="text-primary">
                 <th>Blockchain Address</th>
-                <th>Name</th>
-                <th>Diploma</th>
+                <th>Diploma Blueprint Id</th>
+                <th>Honors</th>
                 <th>Action</th>
 
               </thead>
               <tbody>
-                <tr *ngFor="let student of students">
-                  <td>{{ student.id }}</td>
-                  <td>{{ student.firstName ? student.firstName:'N/A'}}</td>
-                  <td>{{ 'diplomaId'}}</td>
-                  <button class="btn btn-danger btn-fab " ><i class="material-icons">delete</i></button>
+                <tr *ngFor="let diploma of diplomas; index as i">
+                  <td>{{ diploma.owner }}</td>
+                  <td>{{ diploma.blueprintId}}</td>
+                  <td>{{ diploma.honors}}</td>
+                  <button class="btn btn-danger btn-fab " (click)="deleteDiploma(i)"><i class="material-icons">delete</i></button>
                 </tr>
               </tbody>
             </table>
@@ -33,7 +33,7 @@
         </div>
         <div class="card-footer">
   
-          <button mat-raised-button class="btn btn-primary pull-right">Issue</button>
+          <button mat-raised-button class="btn btn-primary pull-right" (click)="issueDiplomas()">Issue</button>
           
   
         </div>
@@ -54,18 +54,20 @@
     <form >
       <mat-form-field>
         <mat-label>Choose holder</mat-label>
-        <input matInput name="address" [(ngModel)]="data.address" placeholder="0xFF........AA" />
+        <mat-select matInput name="owner" [(value)]="data.owner" placeholder="Foulen ben falten">
+          <mat-option [value]="student.id" *ngFor="let student of students">{{student.firstName + ' ' + student.lastName }}</mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Choose Diploma</mat-label>
-        <mat-select matInput name="diplomaId" [(value)]="data.id" placeholder="Choose the diploma">
-          <mat-option value="1">1</mat-option>
-          <mat-option>2</mat-option>
-          <mat-option>3</mat-option>
-          <mat-option>4</mat-option>
-          <mat-option>5</mat-option>
-          <mat-option>6</mat-option>
+        <mat-select matInput name="blueprintId" [(value)]="data.blueprintId" placeholder="Choose the diploma">
+          <mat-option [value]="blueprint.id" *ngFor="let blueprint of diplomaBlueprints">{{blueprint.title}}</mat-option>
         </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Input Honors</mat-label>
+        <input matInput type="text" name="honors" [(ngModel)]="data.honors" placeholder="Well | Good"/>
+          
       </mat-form-field>
 
     </form>

@@ -16,14 +16,21 @@ export class DiplomaService implements OnInit {
   index: number;
   exist: Boolean;
 
-  constructor(private web3Service: Web3Service) { }
+  constructor(private web3Service: Web3Service) { 
+    this.Diplomachain = this.web3Service.artifactsToContract();
+
+  }
 
   ngOnInit() {
+    /* console.log("oninit diplomaservice");
+    
     this.web3Service
       .artifactsToContract(diplomachain_artifacts)
       .then((DiplomachainAbstraction) => {
+        console.log("oninit diplomaservice ",DiplomachainAbstraction);
+
         this.Diplomachain = DiplomachainAbstraction;
-      });
+      }); */
   }
 
   getDiplomas(): Diploma[] {
@@ -67,9 +74,15 @@ export class DiplomaService implements OnInit {
     });
     return this.index;
   } */
-
   issueDiploma(diploma: Diploma) {
-    this.Diplomachain.deployed().then((deployed) => {
+    let dateTime = new Date();
+    this.Diplomachain.issueDiploma(
+      diploma.owner,
+      diploma.blueprintId,
+      diploma.honors,
+      dateTime.getTime()
+    ).send();
+    /* this.Diplomachain.deployed().then((deployed) => {
       deployed.issueDiploma
         .call(
           diploma.owner,
@@ -82,7 +95,7 @@ export class DiplomaService implements OnInit {
           return result;
         })
         .catch((err) => console.log(err));
-    });
+    }); */
   }
 
   addDiploma(diploma_id: Bytes32) {

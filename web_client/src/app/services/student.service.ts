@@ -22,18 +22,20 @@ export class StudentService implements OnInit {
   constructor(
     private web3Service: Web3Service,
     private router: Router
-  ) { }
+  ) {
+    this.Diplomachain = this.web3Service.artifactsToContract();
+   }
 
   ngOnInit() {
-    this.web3Service
+    /* this.web3Service
       .artifactsToContract(diplomachain_artifacts)
       .then((DiplomachainAbstraction) => {
         this.Diplomachain = DiplomachainAbstraction;
-      });
+      }); */
   }
 
-  getStudents(): Student[] {
-    this.Diplomachain.deployed().then((deployed) => {
+  async getStudents()/* : Student[] */ {
+    /* this.Diplomachain.deployed().then((deployed) => {
       deployed.getStudents
         .call({ from: this.web3Service.mainAccount })
         .then((result) => {
@@ -41,7 +43,8 @@ export class StudentService implements OnInit {
         })
         .catch((err) => console.log(err));
     });
-    return this.students;
+    return this.students; */
+    return await this.Diplomachain.getStudents().call();
   }
 
   getStudent(student: Address): Student {
@@ -56,8 +59,11 @@ export class StudentService implements OnInit {
     return this.student;
   }
 
-  getStudentDiplomas(student: Address): Diploma[] {
-    this.Diplomachain.deployed().then((deployed) => {
+  async getStudentDiplomas(student: Address)/* : Diploma[] */ {
+
+    let result = await this.Diplomachain.getStudentDiplomas(student).call();
+    return result;
+    /* this.Diplomachain.deployed().then((deployed) => {
       deployed.getStudentDiplomas
       .call(student, { from: this.web3Service.mainAccount })
       .then((result) => {
@@ -65,7 +71,7 @@ export class StudentService implements OnInit {
       })
       .catch((err) => console.log(err));
     });
-    return this.diplomas;
+    return this.diplomas; */
   }
 
   // No need to get Diplomas Id when we could get their full objects
@@ -95,11 +101,12 @@ export class StudentService implements OnInit {
     return this.index;
   } */
   
-  addStudent(student: Student) {
-    this.Diplomachain.deployed().then((deployed) => {
+  async addStudent(student: Student) {
+    console.log("addstudent service : ",student)
+  /*   this.Diplomachain.deployed().then((deployed) => {
       deployed.addStudent
       .call(
-        student.id,
+        //student.id,
         student.firstName,
         student.lastName,
         student.email,
@@ -107,10 +114,18 @@ export class StudentService implements OnInit {
       ) 
       .then((result) => {
         this.router.navigate(['/']);
+        console.log("adding student ",result)
         return result;
       })
       .catch((err) => console.log(err));
-    });
+    }); */
+    let result = await this.Diplomachain.addStudent(
+      student.firstName,
+        student.lastName,
+        student.email,
+        student.diplomas
+    ).send();
+    return result;
   }
   // deleting is not adequate 
   /* deleteStudent(student_addr: Address) {

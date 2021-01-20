@@ -46,7 +46,7 @@ const routes: Routes =[
   {
     path: 'auth',
     component: AuthLayoutComponent,
-    canActivate: [UnauthGuard],
+    /* canActivate: [UnauthGuard], */
     children: [{
       path: '',
       loadChildren: './layouts/auth-layout/auth-layout.module#AuthLayoutModule'

@@ -12,48 +12,61 @@ export class DiplomaBluePrintService implements OnInit{
   diplomaBlueprint: DiplomaBluePrint;
   diplomaBlueprints: DiplomaBluePrint[];
   index: number;
-  constructor(private web3Service: Web3Service) { }
+  constructor(private web3Service: Web3Service) {
+    this.Diplomachain = this.web3Service.artifactsToContract();
+    console.log("blueprint service ; ",this.Diplomachain)
+    
+   }
 
   ngOnInit() {
+    /* console.log("oninit diploma blueprint service")
     this.web3Service
       .artifactsToContract(diplomachain_artifacts)
       .then((DiplomachainAbstraction) => {
+        console.log("oninit blueprint service",DiplomachainAbstraction)
         this.Diplomachain = DiplomachainAbstraction;
-      });
+      }); */
+      
   }
 
-  getDiplomaBlueprints(): DiplomaBluePrint[] {
-    this.Diplomachain.deployed().then((deployed) => {
-      deployed.getDiplomaBlueprints
-        .call({ from: this.web3Service.mainAccount })
-        .then((result) => {
-          this.diplomaBlueprints = result;
-        })
-        .catch((err) => console.log(err));
-    });
-    return this.diplomaBlueprints;
+  async getDiplomaBlueprints() :Promise<DiplomaBluePrint[]>{
+    /* this.Diplomachain.getDiplomaBlueprints().call()
+    .then(result => console.log("result ",result))
+    .catch(error => console.log("result error ",error)); */
+    let result:DiplomaBluePrint[] =  await this.Diplomachain.getDiplomaBlueprints().call();
+
+    return result;
   }
 
-  addDiplomaBlueprint(diplomaBlueprintId: Bytes32) {
-    this.Diplomachain.deployed().then((deployed) => {
+  async addDiplomaBlueprint(
+    title:string,
+    description:string,
+    speciality:string
+    )  {
+    let result:DiplomaBluePrint = await this.Diplomachain.addDiplomaBlueprint(
+      title,
+      description,
+      speciality,
+      <Bytes32[]>[]
+      ).send();
+    return result;
+    
+    /* this.Diplomachain.then((deployed) => {
       deployed.addDiplomaBlueprint
         .call(diplomaBlueprintId, { from: this.web3Service.mainAccount })
         .then((result) => {
           return result;
         })
         .catch((err) => console.log(err));
-    });
+    }); */
   }
 
   getDiplomaBlueprint(diplomaBlueprintId: Bytes32): DiplomaBluePrint {
-    this.Diplomachain.deployed().then((deployed) => {
-      deployed.getDiplomaBlueprint
-        .call(diplomaBlueprintId)
+    this.Diplomachain.getDiplomaBlueprint(diplomaBlueprintId)
         .then((result) => {
           this.diplomaBlueprint = result;
         })
         .catch((err) => console.log(err));
-    });
     return this.diplomaBlueprint;
   }
 

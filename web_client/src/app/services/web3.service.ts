@@ -4,6 +4,11 @@ import { Router } from "@angular/router";
 import { RoleService } from "./role.service";
 import { LocalService } from "./local.service";
 import { Address } from "soltypes";
+
+
+const contractInterface = require("../../../../blockchain/build/contracts/Diplomachain.json");
+
+
 declare let require: any;
 const Web3 = require("web3");
 const contract = require("@truffle/contract");
@@ -19,7 +24,7 @@ export class Web3Service {
   private logged: boolean = false;
   public mainAccount: Address;
   public ready = false;
-
+  private contract;
   public accountsObservable = new Subject<string[]>();
 
   constructor(
@@ -28,6 +33,7 @@ export class Web3Service {
     private localService: LocalService
   ) {
     console.log("inside web3 service constructor");
+    this.bootstrapWeb3();
   }
   public isLogged(): boolean {
     return this.logged;
@@ -49,9 +55,8 @@ export class Web3Service {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof window.ethereum !== "undefined") {
       console.log("Metamask found");
-      // Use Mist/MetaMask's provider
-      console.log(window.ethereum);
-      window.ethereum.enable().then((accounts,error) => {
+
+      window.ethereum.enable().then((accounts) => {
 
         this.web3 = new Web3(window.ethereum);
         this.logged = true;
@@ -59,6 +64,7 @@ export class Web3Service {
         console.log("provided accounts, ", accounts);
         this.mainAccount = window.ethereum.selectedAddress;
         console.log("is main account true ? ", this.mainAccount == accounts[0]);
+
         this.initChangingListener();
         // commenting the next line to remove the ciruclar dependecy
         // we can call the setRole directly through the login component/page
@@ -83,17 +89,17 @@ export class Web3Service {
     // setInterval(() => this.refreshAccounts(), 1000);
   }
 
-  public async artifactsToContract(artifacts) {
-    if (!this.web3) {
-      console.log("Web3 not found!");
-      const delay = new Promise((resolve) => setTimeout(resolve, 100));
-      await delay;
-      return await this.artifactsToContract(artifacts);
-    }
+  public artifactsToContract(artifacts=contractInterface) {
+  
 
-    const contractAbstraction = contract(artifacts);
+   /*  const contractAbstraction = contract(artifacts);
+    console.log("contractabs ",contractAbstraction);
     contractAbstraction.setProvider(this.web3.currentProvider);
-    return contractAbstraction;
+    return contractAbstraction; */
+    this.contract = new this.web3.eth.Contract(artifacts.abi,"0xd45628756F4963D6FC1edf32DF7c464c30238859",{ from: this.mainAccount });
+    this.contract.setProvider(this.web3.currentProvider);
+    console.log("web3 contract", this.contract)
+    return this.contract.methods;
   }
 
   private async refreshAccounts() {

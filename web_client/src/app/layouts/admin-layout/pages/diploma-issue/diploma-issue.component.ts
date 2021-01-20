@@ -1,8 +1,17 @@
 import { Component, OnInit, Inject, ViewChild, TemplateRef } from '@angular/core';
 import { MatDialog,MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Address} from 'soltypes';
+
+// modals
 import { Student } from "app/models/student.model";
+import { Diploma } from "app/models/diploma.model";
+import { DiplomaBluePrint } from "app/models/diplomaBluePrint.model";
+
+// services
+import { DiplomaBluePrintService } from 'app/services/diploma-blue-print.service';
 import { StudentService } from 'app/services/student.service';
-import { Bytes32, Address} from 'soltypes';
+import { DiplomaService } from 'app/services/diploma.service';
+
 // this only used for injection data within the dialog (can be changed to match the contract field types)
 
 @Component({
@@ -12,32 +21,46 @@ import { Bytes32, Address} from 'soltypes';
 })
 export class DiplomaIssueComponent implements OnInit {
   @ViewChild('diplomaHolderModal',{read:TemplateRef}) diplomaHolderModalRef:TemplateRef<any> ;
-  students: Student[]=[];
-  newStudent: Student;
+  students: Student[]
+  diplomaBlueprints:DiplomaBluePrint[];
+  diplomas:Diploma[]=[];
 
   // check points used to indicate in which phase the issuing 
 
   checkPoints = [
-    {name:"Creating",description:"uploading the diploma file",completed:true,isEnd:false},
-    {name:"Hashing",description:"Hashing the diploma content",completed:false,isEnd:false},
+    {name:"Creating",description:"uploading the diploma file",completed:false,isEnd:false},
     {name:"Issuing",description:"Interacting with the blockchain",completed:false,isEnd:false},
-    {name:"Done",description:"Done",completed:true,isEnd:true}
+    {name:"Done",description:"Done",completed:false,isEnd:true}
   ]
   constructor(
     public dialog: MatDialog,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private blueprintService: DiplomaBluePrintService,
+    private diplomaService: DiplomaService,
   ) { }
   
   ngOnInit(): void {
-   /*  this.students = [
-      {id:Address.from("0xDC25EF3F5B8A186998338A2ADA83795FBA2D695E"),'firstName':'Mohamed','lastName':'Test','nationality':'TN','phoneNumber':'424242424242','email':'test@email.com','diplomas':[],'gender':'na'},
-    ]; */
+ 
+    // loading the data that will be used within the model form
+    this.loadStudents();
+    this.loadBlueprints();
   }
-  addStudent(student:Student){
-    //this.students.push(student);
-    this.studentService.addStudent(student);
+
+  async loadStudents(){
+    this.students = await this.studentService.getStudents();
+    console.log("diplomaissue ",this.students)
   }
-  deleteStudent(studentId:Address){
+  async loadBlueprints(){
+    this.diplomaBlueprints = await this.blueprintService.getDiplomaBlueprints();
+    console.log("diplomablueprint ",this.diplomaBlueprints)
+  }
+  addDiploma(diploma:Diploma){
+    console.log("adding diploma ",diploma)
+    this.diplomas.push(diploma);
+  }
+  deleteDiploma(index){
+    console.log("delete",index)
+    this.diplomas = this.diplomas.filter((_,diplomaIndex)=> diplomaIndex !=index);
     // deleting the student from the list and not from the blockchain storage 
     // also the student object will be created when auth this is why we don't need it deletion anymore
 
@@ -47,20 +70,31 @@ export class DiplomaIssueComponent implements OnInit {
   // this will open to add another diploma to be issued
   openDialog(){
     const dialogRef = this.dialog.open(this.diplomaHolderModalRef, {
-      data: {}
+      data: {
+        owner:'',
+        blueprintId:'',
+        honors:'',
+      }
     });
 
     dialogRef.afterClosed().subscribe(data => {
       console.log("diploma holder : ", data);
       // verify if the admin provided all the necessay attributes, for now just id..
-      if(data && data.id) {
+      if(data) {
         // Here also, we need to add all the attributes
-        this.newStudent.id = data.id;
-        this.newStudent.firstName = data.firstName;
-        this.newStudent.lastName = data.lastName;
-        this.newStudent.email = data.email;
-        this.addStudent(this.newStudent);
+
+        this.addDiploma(data);
       }
     });
+  }
+
+  issueDiplomas(){
+    // iterate through the draft diploma
+    this.checkPoints[0].completed = true;
+    this.diplomas.forEach(diploma=> {
+      this.diplomaService.issueDiploma(diploma);
+    })
+    // execute transaction for all the diploma creations
+
   }
 }

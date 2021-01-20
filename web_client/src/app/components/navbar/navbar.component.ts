@@ -22,11 +22,11 @@ export class NavbarComponent implements OnInit {
                 private web3service: Web3Service
                 ) {
       this.location = location;
-          this.sidebarVisible = false;
+       /*    this.sidebarVisible = false; */
     }
 
     ngOnInit(){
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
+      /* this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.router.events.subscribe((event) => {
@@ -36,10 +36,10 @@ export class NavbarComponent implements OnInit {
            $layer.remove();
            this.mobile_menu_visible = 0;
          }
-     });
+     }); */
     }
 
-    sidebarOpen() {
+    /* sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
         setTimeout(function(){
@@ -126,5 +126,5 @@ export class NavbarComponent implements OnInit {
           }
       }
       return 'Dashboard';
-    }
+    } */
 }

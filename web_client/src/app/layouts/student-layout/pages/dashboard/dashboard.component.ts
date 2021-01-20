@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  getDiplomas() {
-    this.diplomas = this.studentService.getStudentDiplomas(this.web3Service.mainAccount);
+  async getDiplomas() {
+    this.diplomas = await  this.studentService.getStudentDiplomas(this.web3Service.mainAccount);
   }
 }

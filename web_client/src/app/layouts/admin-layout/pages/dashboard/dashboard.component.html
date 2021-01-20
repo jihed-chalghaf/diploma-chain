@@ -1,4 +1,10 @@
-
+<div class="row">
+  <div class="col-md-10 mx-auto">
+    <button class="btn btn-secondary" routerLink="/admin/diploma-issue">
+      <i class="material-icons">add</i> Issue Diploma
+    </button>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-10 mx-auto">
     <div class="card">
@@ -10,14 +16,14 @@
       </div>
 
       <!-- to be changed to receive real stuff-->
-      <div class="card-body" *ngIf="createdDiplomas.length==0">
+      <div class="card-body" *ngIf="diplomaBluePrints.length==0">
         You can add diploma blueprint
       </div>
-      <div id="diploma-list" *ngIf="createdDiplomas.length!=0" class="card-body d-flex flex-row flex-wrap">
-        <div class="card col-md-4 mx-4" *ngFor="let diploma of createdDiplomas">
+      <div id="diploma-list" *ngIf="diplomaBluePrints.length!=0" class="card-body d-flex flex-row flex-wrap">
+        <div class="card col-md-4 mx-4" *ngFor="let diplomaBP of diplomaBluePrints">
           <div class="card-header">
-            <h4 class="card-title">{{'diploma.title' || 'N/A'}}</h4>
-            <p class="card-category">Establishement Chair : Samir Hamza </p>
+            <h4 class="card-title">{{diplomaBP.title || 'N/A'}}</h4>
+            <p class="card-category">Speciality : {{diplomaBP.speciality}} </p>
           </div>
           <div class="card-body">
             Establishement : Insat

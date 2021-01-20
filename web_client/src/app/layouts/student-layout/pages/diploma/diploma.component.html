@@ -1,52 +1,60 @@
-
-    <div class="card" (click)="popDiploma()">
-        <div class="card-header card-header-icon" [ngClass]="{'card-header-success': diploma.verified,'card-header-warning':!diploma.verified}">
-            <div class="card-icon">
-              <i class="material-icons">{{diploma.verified ?'check_box':'hourglass_top'}}</i>
-            </div>
-
-            <h4 class="card-title">{{diploma.title || 'N/A'}}</h4>
-        </div>
-        <div class="card-body">
-            <p class="card-category">Establishement Chair : Mr. Samir Hamza</p>
-            Establishement : INSAT
-          </div>
+<div class="card" (click)="popDiploma()">
+  <!--         <div class="card-header card-header-icon" [ngClass]="{'card-header-success': diploma.verified,'card-header-warning':!diploma.verified}">
+ -->
+  <div class="card-header card-header-icon card-header-success">
+    <div class="card-icon">
+      <!--               <i class="material-icons">{{diploma.verified ?'check_box':'hourglass_top'}}</i>
+ -->
+      <i class="material-icons">check_box</i>
     </div>
 
-
-
+    <h4 class="card-title">{{ diploma.id || "N/A" }}</h4>
+  </div>
+  <div class="card-body">
+    <p class="card-category">Establishement : INSAT</p>
+  </div>
+</div>
 
 <!-- this will be the template used for the modal-->
 
-<ng-template #diplomaModal >
-      <mat-dialog-content class="mat-typography">
-        <div class="col">
-
-            <div class="diploma">
-              <div class="diploma-header">
-                <h2>{{diploma.title ||  'Diploma Title'}}</h2>
-              </div>
-              <div class="diploma-body">
-                <div class="diploma-content">
-                  <h4>We hereby congratulate our student</h4>
-                  <h2>Foulen Ben Falten</h2>
-                  <h3>For the successful completion of this certification</h3>
-                </div>
-                <div class="diploma-image">
-                  <h3>INSAT</h3>
-                  <img src='assets/img/insatlogo.png'>
-                </div>
-              </div>
-              <div class="diploma-feet">
-                <h4>Mr. Samir Hamza</h4>
-                <h4>HASH</h4>
-              </div>
-            </div>
-      
+<ng-template #diplomaModal>
+  <mat-dialog-content class="mat-typography">
+    <div class="col">
+      <div class="diploma">
+        <div class="diploma-header">
+          <h2>{{ diploma.title || "Diploma Title" }}</h2>
+        </div>
+        <div class="diploma-body">
+          <div class="diploma-content">
+            <h4>We hereby congratulate our student</h4>
+            <h2>Foulen Ben Falten</h2>
+            <h3>For the successful completion of this certification</h3>
           </div>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-button class="btn btn-secondary" mat-dialog-close>Cancel</button>
-      <button mat-button class="btn btn-primary" [mat-dialog-close]="true" cdkFocusInitial [href]="downloadJsonHref" download=fileName>Share</button>
-    </mat-dialog-actions>
+          <div class="diploma-image">
+            <h3>INSAT</h3>
+            <img src="assets/img/insatlogo.png" />
+          </div>
+        </div>
+        <div class="diploma-feet">
+          <h4>Mr. Samir Hamza</h4>
+          <h4>HASH</h4>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button class="btn btn-secondary" mat-dialog-close>
+      Cancel
+    </button>
+    <button
+      mat-button
+      class="btn btn-primary"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      [href]="downloadJsonHref"
+      download="fileName"
+    >
+      Share
+    </button>
+  </mat-dialog-actions>
 </ng-template>

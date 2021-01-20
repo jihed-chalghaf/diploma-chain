@@ -25,7 +25,6 @@ export class RegisterComponent implements OnInit {
   msg: any;
 
   constructor(
-    private web3Service: Web3Service,
     private studentService: StudentService
   ) { }
 
@@ -35,10 +34,10 @@ export class RegisterComponent implements OnInit {
   register(form: NgForm) {
     console.log('beginning of the registration process');
     // make sure the new student isn't trying to register while he's logged in
-    if(!this.web3Service.isLogged()) {
+    // we will redirect the user if logged using a guard
       // prepare the new student in the correct format for creation
       this.newStudent = new Student();
-      this.newStudent.id = form.controls.id.value;
+      // this.newStudent.id = form.controls.id.value;
       this.newStudent.firstName = form.controls.firstName.value;
       this.newStudent.lastName = form.controls.lastName.value;
       this.newStudent.email = form.controls.email.value;
@@ -47,8 +46,8 @@ export class RegisterComponent implements OnInit {
       // a little log for testing purposes
       console.log(this.newStudent);
       // finally call the service function to initiate the creation
-      this.studentService.addStudent(this.newStudent);
-    }
+      let result = this.studentService.addStudent(this.newStudent);
+      console.log('register result ',result);
   }
 
   closeSuccess() {
