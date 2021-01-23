@@ -3,6 +3,8 @@ import { MatDialog,MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog
 import {DiplomaBlueprintCreateComponent} from '../diploma-blueprint-create/diploma-blueprint-create.component';
 import { Diploma } from '../../../../models/diploma.model';
 import { DiplomaBluePrintService } from 'app/services/diploma-blue-print.service';
+import { DiplomaService } from 'app/services/diploma.service';
+
 import { Web3Service } from 'app/services/web3.service';
 
 import {DiplomaBluePrint} from 'app/models/diplomaBluePrint.model';
@@ -14,10 +16,12 @@ import {DiplomaBluePrint} from 'app/models/diplomaBluePrint.model';
 })
 export class DashboardComponent implements OnInit {
   diplomaBluePrints: DiplomaBluePrint[] = [];
+  pendingDiplomas:Diploma[];
   constructor(
     public dialog:MatDialog,
     private web3Service: Web3Service,
-    private blueprintService:DiplomaBluePrintService
+    private blueprintService:DiplomaBluePrintService,
+    private diplomaService:DiplomaService
   ) { }
 
   ngOnInit(): void {
@@ -25,10 +29,8 @@ export class DashboardComponent implements OnInit {
   }
   async loadBlueprints(){
     this.diplomaBluePrints = await this.blueprintService.getDiplomaBlueprints();
-   
   }
-
-
+  
   // diploma blueprint creation dialog
   openDialog(){
     const dialogRef = this.dialog.open(DiplomaBlueprintCreateComponent, {
@@ -45,7 +47,7 @@ export class DashboardComponent implements OnInit {
           data.description,
           data.speciality,
         );
-        if(result && result.status){
+        if(result){
           // TODO add notif 
           this.loadBlueprints()
           

@@ -7,6 +7,7 @@ pragma experimental ABIEncoderV2;
         address owner;
         address issuer;
         string honors;
+        bool validated; // if it's requested from student it must be validated from admin
         uint256 dateObtained; // timestamps format
     }
 
@@ -159,18 +160,24 @@ contract Diplomachain {
         array.pop();
     } */
     // addDiploma() => when a student requests a diploma, the admin will call this fct to issue it
-    function addDiploma(bytes32 _id) public onlyAdmin {
+    function validateDiploma(bytes32 _id) public onlyAdmin {
         require(diplomasIndexes[_id] == 0, "Diploma already exists");
         require(pendingDiplomasIndexes[_id] != 0, "Diploma request is not registered or has been removed");
         diplomasCount++;
         diplomasIndexes[_id] = diplomas.length + 1;
+        Diploma memory temp = pendingDiplomas[pendingDiplomasIndexes[_id] - 1];
+        temp.validated = true; // changing the status
         diplomas.push(
-            pendingDiplomas[pendingDiplomasIndexes[_id] - 1]
+            temp
         );
         // get the student (owner) address
         address student_adr = pendingDiplomas[pendingDiplomasIndexes[_id] - 1].owner;
         // add the new diploma id to the student's diplomas ids array
         students[studentsIndexes[student_adr] - 1].diplomas.push(
+            _id
+        );
+        // add the new diploma id to the diploma blueprint's diplomas ids array
+        diplomaBlueprints[diplomaBlueprintsIndexes[temp.blueprintId] - 1].diplomas.push(
             _id
         );
         // remove the diploma from the pending diplomas array
@@ -193,10 +200,14 @@ contract Diplomachain {
         diplomasCount++;
         diplomasIndexes[id] = diplomas.length + 1;
         diplomas.push(
-            Diploma(id,  blueprintId, owner, admin, _honors, _dateObtained)
+            Diploma(id,  blueprintId, owner, admin, _honors, true, _dateObtained)
         );
         // add the new diploma id to the student's diplomas ids array
         students[studentsIndexes[owner] - 1].diplomas.push(
+            id
+        );
+        // add the new diploma id to the diploma blueprint's diplomas ids array
+        diplomaBlueprints[diplomaBlueprintsIndexes[blueprintId] - 1].diplomas.push(
             id
         );
         emit LogAddDiploma(id);
@@ -261,6 +272,24 @@ contract Diplomachain {
         }
         return full_diplomas;
     }
+
+    // get student pending diplomas 
+    function getStudentPendingDiplomas(address studentId) public  onlyStudent view returns (Diploma[] memory) {
+        require(msg.sender == studentId, "Only owner are allowed");
+        uint256 number=0;
+        for (uint256 i = 0; i < pendingDiplomas.length; i++) {
+            if(pendingDiplomas[i].owner == msg.sender){
+                number+=1;
+            }
+        }
+        Diploma[] memory _pendingDiplomas = new  Diploma[] (number);
+        for (uint256 i = 0; i < pendingDiplomas.length; i++) {
+            if(pendingDiplomas[i].owner == msg.sender){
+                _pendingDiplomas[i]= pendingDiplomas[i];
+            }
+        }
+        return _pendingDiplomas;
+    }
     // requestDiploma()
     function requestDiploma(
         bytes32 blueprintId,
@@ -276,11 +305,15 @@ contract Diplomachain {
         pendingDiplomasCount++;
         pendingDiplomasIndexes[id] = pendingDiplomas.length + 1;
         pendingDiplomas.push(
-            Diploma(id, blueprintId ,msg.sender, admin, _honors, _dateObtained)
+            Diploma(id, blueprintId ,msg.sender, admin, _honors, false, _dateObtained)
         );
         emit LogRequestDiploma(msg.sender);
     }
+    // return pending dipomas
 
+    function getPendingDiplomas() public view returns(Diploma[] memory){
+        return pendingDiplomas;
+    } 
 
     function addDiplomaBlueprint(
         string memory title,
@@ -297,12 +330,12 @@ contract Diplomachain {
         );
         emit LogAddDiplomaBlueprint(id);
     }
-    function getDiplomaBlueprint(bytes32 id) public onlyAdmin view returns (DiplomaBluePrint memory) {
+    function getDiplomaBlueprint(bytes32 id) public view returns (DiplomaBluePrint memory) {
         require(diplomaBlueprintsIndexes[id]!=0, "Diploma Bluerprint not found");
         return diplomaBlueprints[diplomaBlueprintsIndexes[id] - 1];
     }
     // this will return all diplom blueprints because we have a single issuer (else we will select based on the issuer)
-    function getDiplomaBlueprints()public onlyAdmin view returns (DiplomaBluePrint[] memory){
+    function getDiplomaBlueprints()public view returns (DiplomaBluePrint[] memory){
         return diplomaBlueprints;
     }
     // returns the diploma by the selected blueprint

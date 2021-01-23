@@ -33,8 +33,8 @@ export class DiplomaService implements OnInit {
       }); */
   }
 
-  getDiplomas(): Diploma[] {
-    this.Diplomachain.deployed().then((deployed) => {
+  async getDiplomas()/* : Diploma[] */ {
+    /* this.Diplomachain.deployed().then((deployed) => {
       deployed.getDiplomas
         .call({ from: this.web3Service.mainAccount })
         .then((result) => {
@@ -42,23 +42,25 @@ export class DiplomaService implements OnInit {
         })
         .catch((err) => console.log(err));
     });
-    return this.diplomas;
+    return this.diplomas; */
+    let result = await this.Diplomachain.getDiplomas().call();
+    return result;
   }
 
-  requestDiploma(diploma: Diploma) {
-    this.Diplomachain.deployed().then((deployed) => {
-      deployed.requestDiploma
-        .call(
-          diploma.issuer,
-          diploma.honors,
-          diploma.dateObtained,
-          { from: this.web3Service.mainAccount }
-        )
-        .then((result) => {
-          return result;
-        })
-        .catch((err) => console.log(err));
-    });
+  async getPendingDiplomas() {
+    let result = await this.Diplomachain.getPendingDiplomas().call();
+    return result;
+  }
+
+  async requestDiploma(blueprintId,honors) {
+    let dateTime = new Date();
+
+    let result = await this.Diplomachain.requestDiploma(
+          blueprintId,
+          honors,
+          dateTime.getTime()
+        ).send()
+    return result;        
   }
 
   // No need to get the index for diploma (we can get it fully)
@@ -98,15 +100,17 @@ export class DiplomaService implements OnInit {
     }); */
   }
 
-  addDiploma(diploma_id: Bytes32) {
-    this.Diplomachain.deployed().then((deployed) => {
+  async validateDiploma(diploma_id: Bytes32) {
+    /* this.Diplomachain.deployed().then((deployed) => {
       deployed.addDiploma
         .call(diploma_id, { from: this.web3Service.mainAccount })
         .then((result) => {
           return result;
         })
         .catch((err) => console.log(err));
-    });
+    }); */
+    let result = await this.Diplomachain.validateDiploma(diploma_id).send();
+    return result;
   }
   
   verifyDiploma(diploma: Diploma): Boolean {

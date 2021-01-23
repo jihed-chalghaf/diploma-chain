@@ -1,29 +1,23 @@
 <h4 mat-dialog-title>Request a new Diploma</h4>
 <mat-dialog-content class="mat-typography">
-  <form>
-    <mat-form-field >
-        <mat-select matInput placeholder="Choose the diploma issuer">
-            <mat-option>1</mat-option>
-            <mat-option>2</mat-option>
-            <mat-option>3</mat-option>
-            <mat-option>4</mat-option>
-            <mat-option>5</mat-option>
-            <mat-option>6</mat-option>
+  <form [formGroup]="requestForm">
+    
+      <mat-form-field>
+        <mat-select matInput (change)="changeBlueprint($event)" formControlName="blueprintId" placeholder="Choose the diploma">
+            <mat-option  [value]="blueprint.id" *ngFor="let blueprint of diplomaBluePrints">{{blueprint.title}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field>
-        <mat-select matInput placeholder="Choose the diploma">
-            <mat-option>1</mat-option>
-            <mat-option>2</mat-option>
-            <mat-option>3</mat-option>
-            <mat-option>4</mat-option>
-            <mat-option>5</mat-option>
-            <mat-option>6</mat-option>
-        </mat-select>
+      <mat-form-field >
+        <input matInput type="text" formControlName="honors" name="honors" placeholder="Excellent|Good|Medium or any other honors">
       </mat-form-field>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button class="btn btn-secondary" mat-dialog-close>Cancel</button>
-  <button mat-button class="btn btn-primary" [mat-dialog-close]="true" cdkFocusInitial>Request</button>
+  <button mat-button class="btn btn-primary" [disabled]="!requestForm.valid" (click)="requestDiploma()"  cdkFocusInitial>Request</button>
 </mat-dialog-actions>
+
+
+<ng-template >
+
+</ng-template>

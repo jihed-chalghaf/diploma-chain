@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DiplomaComponent } from './pages/diploma/diploma.component';
 import { DiplomaListComponent } from './pages/diploma-list/diploma-list.component';
@@ -23,6 +24,8 @@ import {MatSelectModule} from '@angular/material/select';
 
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatDialogModule,
     MatInputModule,
     MatSelectModule,

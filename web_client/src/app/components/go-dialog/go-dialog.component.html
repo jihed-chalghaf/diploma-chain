@@ -1,0 +1,8 @@
+<h4 mat-dialog-title>Are you sure ?</h4>
+<mat-dialog-content class="mat-typography">
+  <h3> Make sure that you are willing to continue with the </h3>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button class="btn btn-secondary" mat-dialog-close cdkFocusInitial>Cancel</button>
+  <button mat-button class="btn btn-primary" [mat-dialog-close]="true" >Yes, Continue</button>
+</mat-dialog-actions>

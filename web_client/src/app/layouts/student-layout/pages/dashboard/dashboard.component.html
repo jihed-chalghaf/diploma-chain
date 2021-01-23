@@ -1,6 +1,6 @@
 <section class="row">
 
-  <div class="col-md-8 mx-auto">
+  <div class="col-md-12 mx-auto">
     <div class="card">
       <div class="card-header card-header-info">
         <h3 class="card-title pull-left">Received Verifiable Diploma</h3>
@@ -8,11 +8,9 @@
       </div>
       
       <!-- to be changed to receive real stuff-->
-      <app-diploma-list [diplomas]='diplomas'></app-diploma-list>
+      <app-diploma-list [student]='student' [diplomas]='diplomas'></app-diploma-list>
     </div>
   </div>
-  <div class="col-md-4">
-    <h3>Here comes a component where the user can change his details (if possible using the smart contract or we can ommit it)</h3>
-  </div>
+
   
 </section>

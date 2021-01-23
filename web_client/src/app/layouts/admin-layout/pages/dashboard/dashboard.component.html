@@ -16,10 +16,10 @@
       </div>
 
       <!-- to be changed to receive real stuff-->
-      <div class="card-body" *ngIf="diplomaBluePrints.length==0">
+      <div class="card-body" *ngIf="!diplomaBluePrints || diplomaBluePrints.length==0">
         You can add diploma blueprint
       </div>
-      <div id="diploma-list" *ngIf="diplomaBluePrints.length!=0" class="card-body d-flex flex-row flex-wrap">
+      <div id="diploma-list" *ngIf="diplomaBluePrints && diplomaBluePrints.length!=0" class="card-body d-flex flex-row flex-wrap">
         <div class="card col-md-4 mx-4" *ngFor="let diplomaBP of diplomaBluePrints">
           <div class="card-header">
             <h4 class="card-title">{{diplomaBP.title || 'N/A'}}</h4>
@@ -39,3 +39,10 @@
     </div>
   </div>
 </div>
+
+<section class="row">
+  <div class="col-md-9 p-4 mx-auto">
+
+    <app-diploma-list></app-diploma-list>
+</div>
+</section>

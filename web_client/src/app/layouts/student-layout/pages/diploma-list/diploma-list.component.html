@@ -2,5 +2,5 @@
     <!-- to be changed to receive real stuff-->
     <h3 *ngIf="!diplomas  || diplomas==undefined || diplomas.length===0">Still didn't receive any diploma (you can request one)</h3>
 
-    <app-diploma class="col-md-4 mx-4" [diploma]="diploma" *ngFor="let diploma of diplomas"></app-diploma>
+    <app-diploma class="col-md-4 mx-4" [student]="student" [diploma]="diploma" *ngFor="let diploma of diplomas"></app-diploma>
   </div>

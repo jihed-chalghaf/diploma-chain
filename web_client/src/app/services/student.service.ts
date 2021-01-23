@@ -44,11 +44,14 @@ export class StudentService implements OnInit {
         .catch((err) => console.log(err));
     });
     return this.students; */
-    return await this.Diplomachain.getStudents().call();
+    let result = await this.Diplomachain.getStudents().call();
+    return result;
   }
 
-  getStudent(student: Address): Student {
-    this.Diplomachain.deployed().then((deployed) => {
+  async getStudent(studentAddress: Address): Promise<Student> {
+    let result = await this.Diplomachain.getStudent(studentAddress).call();
+    return result;
+    /* this.Diplomachain.deployed().then((deployed) => {
       deployed.getStudent
         .call(student, { from: this.web3Service.mainAccount })
         .then((result) => {
@@ -56,9 +59,12 @@ export class StudentService implements OnInit {
         })
         .catch((err) => console.log(err));
     });
-    return this.student;
+    return this.student; */
   }
-
+  async getStudentPendingDiplomas(student: Address){
+    let result = await this.Diplomachain.getStudentPendingDiplomas(student).call();
+    return result;
+  }
   async getStudentDiplomas(student: Address)/* : Diploma[] */ {
 
     let result = await this.Diplomachain.getStudentDiplomas(student).call();

@@ -61,13 +61,10 @@ export class DiplomaBluePrintService implements OnInit{
     }); */
   }
 
-  getDiplomaBlueprint(diplomaBlueprintId: Bytes32): DiplomaBluePrint {
-    this.Diplomachain.getDiplomaBlueprint(diplomaBlueprintId)
-        .then((result) => {
-          this.diplomaBlueprint = result;
-        })
-        .catch((err) => console.log(err));
-    return this.diplomaBlueprint;
+  async getSingleDiplomaBlueprint(diplomaBlueprintId: Bytes32) {
+    let result =  await this.Diplomachain.getDiplomaBlueprint(diplomaBlueprintId).call();
+    console.log("getDiplomaBlueprint" ,result);
+    return result;
   }
 
 }

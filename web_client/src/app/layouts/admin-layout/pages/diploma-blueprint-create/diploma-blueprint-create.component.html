@@ -24,7 +24,7 @@
       </mat-dialog-content>
       <mat-dialog-actions align="end">
         <button mat-button class="btn btn-secondary" (click)="close()">Cancel</button>
-        <button mat-button class="btn btn-primary" (click)="createDiplomaBlueprint()" cdkFocusInitial>Create</button>
+        <button mat-button class="btn btn-primary" [disabled]="!diplomaBlueprintForm.valid"(click)="createDiplomaBlueprint()" cdkFocusInitial>Create</button>
       </mat-dialog-actions>
     </div>
     

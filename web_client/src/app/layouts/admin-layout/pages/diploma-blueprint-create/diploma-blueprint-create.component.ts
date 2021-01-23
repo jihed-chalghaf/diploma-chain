@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef,MAT_DIALOG_DATA  } from "@angular/material/dialog";
 import {DiplomaBluePrint} from 'app/models/diplomaBluePrint.model';
 @Component({
@@ -14,9 +14,9 @@ export class DiplomaBlueprintCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.diplomaBlueprintForm = new FormGroup({
-      title: new FormControl(),
-      description: new FormControl(),
-      speciality: new FormControl(),
+      title: new FormControl('',[Validators.required]),
+      description: new FormControl('',[Validators.required]),
+      speciality: new FormControl('',[Validators.required]),
     });
   }
   close(): void {

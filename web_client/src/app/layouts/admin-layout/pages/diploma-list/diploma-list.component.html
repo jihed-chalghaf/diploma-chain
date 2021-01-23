@@ -1,1 +1,39 @@
-<p>admin diploma-list works!</p>
+
+      <div class="card">
+        <div class="card-header card-header-warning">
+          <h4 class="card-title pull-left">Pending Diploma Requests</h4>
+<!--           <button class="btn btn-secondary btn-fab btn-round pull-right" (click)="openDialog()"><i class="material-icons"  >add</i></button>
+ -->        </div>
+        <div class="card-body">
+          <div class="card-content" *ngIf="!pendingDiplomas || pendingDiplomas.length===0">
+            <h3 class="mx-auto"> No Pending Diploma requests for now</h3>
+          </div>
+          <div class="card-content table-responsive table-full-width" *ngIf="pendingDiplomas && pendingDiplomas.length!=0">
+            <table class="table">
+              <thead class="text-primary">
+                <th>Owner Address</th>
+                <th>Diploma Blueprint Id</th>
+                <th>Honors</th>
+                <th>Action</th>
+
+              </thead>
+              <tbody>
+                <tr *ngFor="let diploma of pendingDiplomas; index as i">
+                  <td>{{ diploma.owner.toString().slice(0,10) }}</td>
+                  <td>{{ diploma.blueprintId.toString().slice(0,10)}}</td>
+                  <td>{{ diploma.honors}}</td>
+                  <button *ngIf="toBeValidated.indexOf(diploma.id.toString())==-1" class="btn btn--small btn-success btn-fab btn-round" (click)="addRequest(diploma.id)"><i class="material-icons">check_box</i></button>
+                  <button *ngIf="toBeValidated.indexOf(diploma.id.toString())!=-1" class="btn btn--small btn-danger btn-fab btn-round" (click)="removeRequest(diploma.id)"><i class="material-icons">indeterminate_check_box</i></button>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer container">
+  
+          <button mat-raised-button class="btn btn-success pull-right" (click)="validateRequests()">Validate requests</button>
+          
+  
+        </div>
+      </div>

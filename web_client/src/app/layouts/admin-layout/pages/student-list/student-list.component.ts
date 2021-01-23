@@ -22,7 +22,7 @@ export class StudentListComponent implements OnInit {
   }
 
   getStudents() {
-    this.full_students = this.studentService.getStudents();
+    //this.full_students = this.studentService.getStudents();
     this.extractCredentials();
   }
 
