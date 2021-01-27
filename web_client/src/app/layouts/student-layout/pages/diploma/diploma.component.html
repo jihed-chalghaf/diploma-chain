@@ -45,15 +45,18 @@
     <button mat-button class="btn btn-secondary" mat-dialog-close>
       Cancel
     </button>
-    <button
+    
+    <a [href]="downloadJsonHref" [download]="fileName">
+      <button
       mat-button
       class="btn btn-primary"
       [mat-dialog-close]="true"
       cdkFocusInitial
-      [href]="downloadJsonHref"
-      download="fileName"
     >
       Share
     </button>
+    </a>
+      
+    
   </mat-dialog-actions>
 </ng-template>

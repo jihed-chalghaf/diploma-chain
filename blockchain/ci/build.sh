@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -x
 set -e
-ganache-cli -m "raise luggage december enforce task front replace abuse mail grow spirit loan" > /dev/null &
+ganache-cli -m "always misery scale shadow chest same hurry maple wage exchange jealous analyst" > /dev/null &
 GANACHE_PID=$!
 trap "kill $GANACHE_PID" EXIT INT TERM
 

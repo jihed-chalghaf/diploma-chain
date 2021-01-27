@@ -96,7 +96,7 @@ export class Web3Service {
     console.log("contractabs ",contractAbstraction);
     contractAbstraction.setProvider(this.web3.currentProvider);
     return contractAbstraction; */
-    this.contract = new this.web3.eth.Contract(artifacts.abi,"0xa6c482342Ed853311584EcfA024782885fc1EA15",{ from: this.mainAccount });
+    this.contract = new this.web3.eth.Contract(artifacts.abi,"0x921248255BeA51b8F4A4147758aeb0E48F0dc863",{ from: this.mainAccount });
     this.contract.setProvider(this.web3.currentProvider);
     console.log("web3 contract", this.contract)
     return this.contract.methods;
