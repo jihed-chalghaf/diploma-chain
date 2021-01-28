@@ -100,3 +100,10 @@
 .step-link-done{
     background-color: #66bb6a;
 }
+
+.step-failed{
+    background: linear-gradient(60deg,#ef5350,#e53935);
+}
+.step-link-failed{
+    background-color: #ef5350;
+}

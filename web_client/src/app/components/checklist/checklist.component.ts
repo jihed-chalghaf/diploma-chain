@@ -15,10 +15,11 @@ export class ChecklistComponent implements OnInit {
   }
 }
 
-class checkPoint{
+interface checkPoint{
   name?:string;
   description?: string;
   isEnd?: boolean;
   completed?:boolean
+  valid?:boolean
 }
 

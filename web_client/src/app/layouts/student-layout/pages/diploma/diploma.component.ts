@@ -22,6 +22,7 @@ interface DiplomaExtended{
   honors: string;
   description: string ;
   speciality: string ;
+  validated:boolean;
   dateObtained: number;
 }
 @Component({
@@ -45,9 +46,7 @@ export class DiplomaComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDiplomablueprint().then(() => {
-      this.generateDownloadJsonUri();
-      // commenting this to avoid compilation problems, when we force the input diploma to be of type Diploma, we'll be good to go
-      
+      this.generateDownloadJsonUri();      
       console.log(this.diploma_to_convert);
     });
   }
@@ -57,7 +56,8 @@ export class DiplomaComponent implements OnInit {
     let blueprint:DiplomaBluePrint = await this.diplomaBlueprintService.getSingleDiplomaBlueprint(this.diploma.blueprintId);
     console.log("loaded blueprint ",blueprint);
     this.diploma = {title:blueprint.title,description:blueprint.description,speciality:blueprint.speciality,...this.diploma}
-    this.fileName = this.diploma.id + ".json";
+    // using the student name for more significant file name
+    this.fileName = `${this.student.firstName}_${this.student.lastName}_${this.diploma.title}.json`;
     console.log("filename = ", this.fileName);
     this.prepareDiplomaForConversion();
   }
@@ -78,12 +78,13 @@ export class DiplomaComponent implements OnInit {
   }
 
   prepareDiplomaForConversion() {
+    console.log("diploma to be prepared ",this.diploma)
     this.diploma_to_convert.id = this.diploma.id;
     this.diploma_to_convert.blueprintId = this.diploma.blueprintId;
     this.diploma_to_convert.owner = this.diploma.owner;
     this.diploma_to_convert.issuer = this.diploma.issuer;
     this.diploma_to_convert.honors = this.diploma.honors;
-    this.diploma_to_convert.validated = true;
+    this.diploma_to_convert.validated = this.diploma.validated;
     this.diploma_to_convert.dateObtained = this.diploma.dateObtained;
   }
 

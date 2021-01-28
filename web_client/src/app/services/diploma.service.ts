@@ -18,7 +18,6 @@ export class DiplomaService implements OnInit {
 
   constructor(private web3Service: Web3Service) { 
     this.Diplomachain = this.web3Service.artifactsToContract();
-
   }
 
   ngOnInit() {
@@ -113,17 +112,7 @@ export class DiplomaService implements OnInit {
     return result;
   }
   
-  verifyDiploma(diploma: Diploma): Boolean {
-    this.Diplomachain.deployed().then((deployed) => {
-      deployed.verifyDiploma
-        .call(diploma)
-        .then((result) => {
-          this.exist = result;
-        })
-        .catch((err) => console.log(err));
-    });
-    return this.exist;
-  }
+ 
 
   getDiploma(diploma_id: Bytes32): Diploma {
     this.Diplomachain.deployed().then((deployed) => {

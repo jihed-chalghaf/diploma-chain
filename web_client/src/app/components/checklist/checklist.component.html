@@ -1,14 +1,22 @@
 <ul class="step-list" *ngIf="checkPoints && checkPoints.length!=0" [ngClass]="{'horiz':isHorizantale}">
     <li *ngFor="let check of checkPoints">
-        <span class="step" [ngClass]="{'step-last':check.isEnd,'step-done':check.completed}">
+        <span class="step" [ngClass]="{'step-last':check.isEnd,'step-done':check.completed && check.valid,'step-failed':check.completed && !check.valid}">
             <p *ngIf="!check.isEnd">{{check.name}}</p>
-            <i class="material-icons" *ngIf="check.isEnd && check.completed" >check_circle_outline</i>
+            <i class="material-icons" *ngIf="check.isEnd && check.completed && check.valid" >check_circle_outline</i>
+            <i class="material-icons" *ngIf="check.isEnd && check.completed && !check.valid" >highlight_off</i>
+            
         </span>
-        <span class="step-link" [ngClass]="{'step-link-done':check.completed}" *ngIf="!check.isEnd">
+        
+        <span  *ngIf="!check.isEnd" class="step-link" [ngClass]="{'step-link-done':check.completed && check.valid,'step-link-failed':check.completed && !check.valid }" >
         </span>
+        
     </li>
+    
 </ul>
-
+<!-- <span *ngIf="checkPoints && checkPoints[checkPoints.length -1].isEnd && checkPoints[checkPoints.length -1].completed">
+    <h4 *ngIf="checkPoints[checkPoints.length -1]valid">Diploma Verified!</h4>
+    <h4 *ngIf="!checkPoints[checkPoints.length -1]valid">Diploma is not Verified!</h4>
+</span> -->
 <h5 *ngIf="!checkPoints || !checkPoints.length">
     No steps provided, Please make to provide the right input for the component
 

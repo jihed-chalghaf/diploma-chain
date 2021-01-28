@@ -6,7 +6,12 @@
   
     <div class="col-md-8">
       
-      <app-diploma-verif></app-diploma-verif>
+      <app-diploma-verif 
+      
+      (uploaded)="onUploadNotif($event)"
+      (checked)="onCheckNotif($event)"
+      (verified)="onVerifyingNotif($event)"
+      ></app-diploma-verif>
   
     </div>
   </section>
