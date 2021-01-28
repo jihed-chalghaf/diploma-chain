@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
     constructor(location: Location,  
                 private element: ElementRef,
                 private router: Router,
-                /* private web3service: Web3Service */
+                private web3service: Web3Service
                 ) {
       this.location = location;
        /*    this.sidebarVisible = false; */

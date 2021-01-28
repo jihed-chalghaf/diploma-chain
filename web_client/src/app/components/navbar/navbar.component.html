@@ -30,15 +30,22 @@
                     </a>
                 </li>
 
+                <li class="nav-item" *ngIf="!this.web3service.isLogged()">
+                    
+                    <button class="btn btn-secondary" (click)="this.web3service.login()">
+                        <i class="material-icons ">in</i>
+                        Login
+                    </button>
                 
-                <!-- <li class="nav-item" *ngIf="this.web3service.isLogged()">
+            </li>
+                <li class="nav-item" *ngIf="this.web3service.isLogged()">
                     
                         <button class="btn btn-secondary" (click)="this.web3service.logout()">
                             <i class="material-icons ">lock</i>
                             Log Out
                         </button>
                     
-                </li> -->
+                </li>
             </ul>
         </div>
     </div>
