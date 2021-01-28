@@ -25,6 +25,18 @@ Using Diplomachain, the verification process will take a few minutes, it include
 
 
 ---
+## Solution Components
+
+#### Smart Contract
+
+#### Web Appplication
+
+The web application is angular based front-end application, used to interact with the local blockchain network throught the functionalities provided by the Web3 library.
+
+The application user interface is based on the [Material dashboard angular](https://www.creative-tim.com/product/material-dashboard-angular2) (the free version) created by creative team
+
+
+---
 ## Quick Start
 
 This guide will provide the necessary steps to run the project locally.
@@ -115,3 +127,51 @@ truffle compile --all && truffle deploy --reset
 This command will result in rich log, which will list all details related to the deployment transaction, gas usage, ETH spent and smart contract address, Also we can check the contracts tab in ganache to verify if the smart contract is well deployed 
 
 ## Running the web application
+
+
+To run the front end application in development mode execute
+
+```bash
+cd web_client
+ng serve
+```
+
+To interact with the application  visit:
+
+```
+http://localhost:4200
+```
+As mentioned above, the application features require the metamask extension to create a wallet and to have an Ethereum address used for transactions.
+
+To install the meta mask extension we can refer to https://metamask.io/ ,it is supported on multiple browsers like Chrome, firefox, Edge and Brave
+
+
+After installing the extension, create an account, store the provided passphrase in a secure location and configure a custom RPC connection to interact with the local blockchain network (created by ganache)
+
+![](assets/metamask-network.png)
+
+After configuring the RPC connection in metamask, we must import the first address provided by ganache, it will be used as the **admin address**, also we can import other addresses to be used for students accounts 
+
+![](assets/import-account.png)
+
+---
+
+## Role & Features
+
+The Diplomachain application include 3 roles
+
+* Admin
+    The admin is able to:
+    - Create diploma blueprint
+    - Issue diplomas
+    - Validated dipoma request
+* Student
+    The student is able to:
+    - List his received diplomas
+    - Request a diploma from the admin
+    - Download the diploma (JSON file)
+* Verifier:
+    The verifier is able to
+    - Verify a Diploma by uploading the correspondent JSON file
+
+For extra details on how each role can use the application please refer to the guides
