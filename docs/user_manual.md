@@ -2,9 +2,6 @@
 
 ## Created for the diplomachain beta version - Jan 2021   
 
-
-
-
 <div style="page-break-after: always; break-after: page;"></div>
 
 ## Table of Contents

@@ -1,33 +1,104 @@
 # Diplomachain: an Ethereum-based DAPP for diplomas authenticity
 
 
-An Ethereum-based solution for INSAT students to gain control over their diplomas and university related documents to recruiters, individuals etc., in a secure and authentic way. 
+An Ethereum-based solution for INSAT students to gain control over their diplomas and university related certificated, so they can forward them to recruiters, or potential employer, in a secure and an authentic way. 
 
 
 ## The Problem
 
-The papers based diplomas are quite old method to prove that someone had acquired knowledge in some field. In our current world, those type of papers can be forged, stolen, lost or destroyed leading to more problems for their holders. Also, due to our fast-paced lifestyle we can rely on this type of proof as it take several days to exchange papers with their demanders thus making paper based diploma quite obsolete.   
+The papers based diplomas is an old method to prove that a person had acquired knowledge in a specified field. In our current world, those type of papers can be forged, stolen, lost or destroyed which leads to problems for their holders. Also, due to our fast-paced lifestyle we can't rely on this type of proof as it take several days to exchange them with their demanders thus paper based diploma are becoming obsolete.   
 
 
 ## The solution
 
-To answer the previous sited problems, Digital diploma can not only reduce the risks related to papers based diploma, but we can use them to provide a detailed history of our learning path in a secure and decentralized manner. The control over those digital diploma will be transparent to their issuers, holders and also for whom want to verify them.
+To answer the previous sited problems, Digital diploma can not only reduce the risks related to papers based diploma, but we can use them to provide a detailed history of our learning path in a secure and decentralized manner. The control over those digital diploma will be transparent to their issuers, holders and also for whom may want to verify them.
 
 ## Scenario Basic 
 
-Once interesting scenario that can take place using Digital diplomas, is an employer verifying the diplomas/certificates for a job candidate. In the traditional way, the employer must interact with the institute and verify by phone or via email the authenticity of the provided papers, this process is prone to human mistakes, and also it turns to be a mundane tasks to do it for several candidates. 
+Once interesting scenario that can take place using Digital diplomas, is an employer verifying the diplomas/certificates for a job candidate. In the traditional way, the employer must interact with the institute and verify by phone or via email the authenticity of the provided papers, this process is prone to human mistakes, and also it can be a mundane tasks to do it for several candidates. 
 
-Using Diplomachain, the verification process will take a few minutes, it includes 3 steps:
+Using Diplomachain, the verification process will take few minutes, and it includes 3 steps:
 
 1. The student/ job candidate send his digital diploma to the employer
 2. The employer visit Diplomachain website, choose the verification feature, and upload the provided file
-3. After a Few seconds, the employer gets his response back 
+3. After waiting for few seconds, the employer gets the verification result back 
 
 
 ---
 ## Solution Components
 
+The solution consist of two components,
+a smart contract that include all the logical behavior related to issuing, requesting and verifying digital diploma, and a web application to facilitate the interaction between the non-technical user and the blockchain network
+
+
 #### Smart Contract
+
+The Smart contract is developed using Solidity, the default programming language for Ethereum smart contract, the contract exposes the functions that handle the application logic, those functions will be invoked from the web application and then executed within the Ethereum nodes.
+
+The smart contract functions:
+
+
+```solidity
+function verifyDiploma(Diploma memory diploma) public view returns (bool)
+
+function getDiploma(bytes32 diplomaId) public view returns (Diploma memory)
+
+function addStudent(
+        string memory _firstName,
+        string memory _lastName,
+        string memory _email,
+        bytes32[] memory _diplomas
+)
+
+function getStudent(address student_addr) public view returns (Student memory)
+
+function removeDiplomaItem(Diploma[] storage array, uint256 index)
+
+function validateDiploma(bytes32 _id)
+
+function issueDiploma(
+        address owner,
+        bytes32 blueprintId,
+        string memory _honors,
+        uint256 _dateObtained
+)
+
+function isStudent() public view returns (bool)
+
+function isAdmin() public view returns (bool)
+
+function getDiplomaIndex(bytes32 diplomaId) public view returns (uint256)
+
+function getStudents() public onlyAdmin view returns (Student[] memory)
+
+function getDiplomas() public onlyAdmin view returns (Diploma[] memory)
+
+function getStudentDiplomas(address studentId) public view returns (Diploma[] memory)
+
+function getStudentPendingDiplomas(address studentId) public  onlyStudent view returns (Diploma[] memory)
+
+function requestDiploma(
+        bytes32 blueprintId,
+        string memory _honors,
+        uint256 _dateObtained
+    )
+
+function getPendingDiplomas() public view returns(Diploma[] memory)
+
+function addDiplomaBlueprint(
+        string memory title,
+        string memory description,
+        string memory speciality,
+        bytes32[] memory _diplomas
+    )
+
+function getDiplomaBlueprint(bytes32 id) public view returns (DiplomaBluePrint memory)
+
+function getDiplomaBlueprints()public view returns (DiplomaBluePrint[] memory)
+
+function getDiplomasByBlueprint(bytes32 id) public onlyAdmin view returns (Diploma[] memory)
+```
+
 
 #### Web Appplication
 
@@ -66,7 +137,7 @@ The guide is divided into X major steps:
 
 We start by cloning the repository and changing the working directory
 ```
-git clone <LINK>
+git clone https://github.com/JoePiano/diplomachain
 cd Diplomachain
 ```
 
@@ -124,7 +195,7 @@ After changing the mnemonic in the build.sh file, under the `Diplomachain/blockc
 truffle compile --all && truffle deploy --reset
 ```
 
-This command will result in rich log, which will list all details related to the deployment transaction, gas usage, ETH spent and smart contract address, Also we can check the contracts tab in ganache to verify if the smart contract is well deployed 
+This command will result in rich log, which lists all details related to the deployment transaction, gas usage, ETH spent and smart contract address, Also we can check the contracts tab in ganache to verify if the smart contract is well deployed. 
 
 ## Running the web application
 
@@ -174,4 +245,4 @@ The Diplomachain application include 3 roles
     The verifier is able to
     - Verify a Diploma by uploading the correspondent JSON file
 
-For extra details on how each role can use the application please refer to the guides
+For extra details on how each role can use the application please refer to the [user guide](./docs/user_manual.md) 
